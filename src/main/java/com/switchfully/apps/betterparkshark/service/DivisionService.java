@@ -1,7 +1,9 @@
 package com.switchfully.apps.betterparkshark.service;
 
+import com.switchfully.apps.betterparkshark.domain.Division;
 import com.switchfully.apps.betterparkshark.repository.DivisionRepository;
 import com.switchfully.apps.betterparkshark.service.mapper.DivisionMapper;
+import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.SubDivisionDtoInput;
 import org.springframework.stereotype.Service;
@@ -23,19 +25,26 @@ public class DivisionService {
 
     // METHODS
     public DivisionDtoOutput createDivision(DivisionDtoInput divisionDtoInput) {
-        return null;
+        Division division = divisionMapper.InputToDivision(divisionDtoInput);
+        return divisionMapper.DivisionToOutput(divisionRepository.save(division));
     }
 
     public DivisionDtoOutput createSubDivision(SubDivisionDtoInput subDivisionDtoInput) {
-        return null;
+        Division subDivision = divisionMapper.InputSubToDivision(subDivisionDtoInput);
+        return divisionMapper.DivisionToOutput(divisionRepository.save(subDivision));
     }
 
     public DivisionDtoOutput getDivision(Long id) {
-        return null;
+        Division division = divisionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Division not found"));
+        return divisionMapper.DivisionToOutput(division);
     }
 
     public List<DivisionDtoOutput> getAllDivisions() {
-        return null;
+        List<Division> divisions = divisionRepository.findAll();
+        return divisions.stream()
+                .map(divisionMapper::DivisionToOutput)
+                .toList();
     }
 
 }
