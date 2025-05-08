@@ -16,12 +16,10 @@ public class DivisionController {
 
     // FIELDS
     private final DivisionService divisionService;
-    private final DivisionMapper divisionMapper;
 
     // CONSTRUCTORS
-    public DivisionController(DivisionService divisionService, DivisionMapper divisionMapper) {
+    public DivisionController(DivisionService divisionService) {
         this.divisionService = divisionService;
-        this.divisionMapper = divisionMapper;
     }
 
     // ENDPOINTS
