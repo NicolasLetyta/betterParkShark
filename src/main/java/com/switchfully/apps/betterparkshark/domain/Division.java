@@ -3,6 +3,7 @@ package com.switchfully.apps.betterparkshark.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "DIVISION")
 public class Division {
 
     // FIELDS
@@ -13,10 +14,13 @@ public class Division {
 
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "ORIGINAL_NAME")
     private String originalName;
-    @Column (name  = "DIRECTOR_ID")
+
+    @Column (name  = "director_id")
     private Long directorId;
+
     @Column(name = "PARENT_ID")
     private Long parentId;
 
