@@ -4,7 +4,9 @@ import com.switchfully.apps.betterparkshark.domain.Division;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.SubDivisionDtoInput;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DivisionMapper {
 
     // METHODS
