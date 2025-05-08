@@ -57,6 +57,10 @@ public class Member {
         this.membershipLevel = membershipLevel;
     }
 
+    public void setMembershipLevel(MembershipLevel membershipLevel) {
+        this.membershipLevel = membershipLevel;
+    }
+
     public long getId() {
         return id;
     }

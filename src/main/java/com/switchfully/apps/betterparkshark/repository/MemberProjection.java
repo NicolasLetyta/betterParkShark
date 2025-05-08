@@ -6,7 +6,7 @@ public interface MemberProjection {
     long getId();
     String getName();
     String getLicensePlate();
-    String getPhone();
+    int getPhone();
     String getEmail();
     LocalDateTime getRegistrationDate();
 

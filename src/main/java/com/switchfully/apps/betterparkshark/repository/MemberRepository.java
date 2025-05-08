@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    Member findById(long id);
+
     @Query("SELECT m.id as id, m.name as name, m.licensePlate as lisencePlate, m.phone as phone, m.email as email, m.registrationDate as registrationDate FROM Member m")
     List<MemberProjection> findAllMembersProjected();
 }
