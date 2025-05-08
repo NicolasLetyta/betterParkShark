@@ -1,15 +1,13 @@
 package com.switchfully.apps.betterparkshark.service.mapper;
 
-import com.switchfully.apps.betterparkshark.domain.Address;
-import com.switchfully.apps.betterparkshark.domain.Division;
-import com.switchfully.apps.betterparkshark.domain.Employee;
-import com.switchfully.apps.betterparkshark.domain.ParkingLot;
-import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoOutput;
+import com.switchfully.apps.betterparkshark.domain.*;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutputList;
 
 public class ParkingLotMapper {
+
+    private AddressMapper addressMapper;
 
     public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, long addressId) {
         return new ParkingLot(
@@ -23,84 +21,60 @@ public class ParkingLotMapper {
         );
     }
 
-    public ParkingLotDtoOutput parkingLotToOutput2Phone(ParkingLot parkingLot, Employee contactPerson) {
-        long mobilePhone =25;
-        long phone = 26;
-        String email = "test@test.com";
+    public ParkingLotDtoOutput parkingLotToOutput2Phone(ParkingLotMinInfo parkingLot, Employee contactPerson) {
         return new ParkingLotDtoOutput(
                 parkingLot.getId(),
                 parkingLot.getName(),
                 parkingLot.getMaxCapacity(),
-                mobilePhone,
-                phone,
-                email
+                contactPerson.getMobilePhone(),
+                contactPerson.getTelephone(),
+                contactPerson.getEmail()
         );
     }
 
-    public ParkingLotDtoOutput parkingLotToOutput1Phone(ParkingLot parkingLot, Employee contactPerson) {
-        long phone = 26;
-        String email = "test@test.com";
-        return new ParkingLotDtoOutput(
-                parkingLot.getId(),
-                parkingLot.getName(),
-                parkingLot.getMaxCapacity(),
-                phone,
-                email
-        );
-    }
+//    public ParkingLotDtoOutput parkingLotToOutput1Phone(ParkingLot parkingLot, Employee contactPerson) {
+//        return new ParkingLotDtoOutput(
+//                parkingLot.getId(),
+//                parkingLot.getName(),
+//                parkingLot.getMaxCapacity(),
+//                contactPerson.getMobilePhone(),
+//                contactPerson.getEmail()
+//        );
+//    }
 
-    public ParkingLotDtoOutputList parkingLotToOutputList1Phone(ParkingLot parkingLot, Employee contactPerson, Address address, Division division) {
-        long mobilePhone =25;
-        String email = "test@test.com";
-        String firstName = "test";
-        String lastName = "test";
-        long divisionId = 1;
-        String divisionName = "test";
-
-        AddressDtoOutput addressDtoOutput = new AddressDtoOutput();
-
-        return new ParkingLotDtoOutputList(
-                parkingLot.getId(),
-                parkingLot.getName(),
-                parkingLot.getLotCategory(),
-                parkingLot.getMaxCapacity(),
-                parkingLot.getPriceHour(),
-                addressDtoOutput,
-                firstName,
-                lastName,
-                mobilePhone,
-                email,
-                divisionId,
-                divisionName
-        );
-
-    }
+//    public ParkingLotDtoOutputList parkingLotToOutputList1Phone(ParkingLot parkingLot, Employee contactPerson, Address address, Division division) {
+//        return new ParkingLotDtoOutputList(
+//                parkingLot.getId(),
+//                parkingLot.getName(),
+//                parkingLot.getLotCategory(),
+//                parkingLot.getMaxCapacity(),
+//                parkingLot.getPriceHour(),
+//                addressMapper.addressToOutput(address),
+//                contactPerson.getFirstName(),
+//                contactPerson.getLastName(),
+//                contactPerson.getMobilePhone(),
+//                contactPerson.getEmail(),
+//                division.getId(),
+//                division.getName()
+//        );
+//
+//    }
 
     public ParkingLotDtoOutputList parkingLotToOutputList2Phone(ParkingLot parkingLot, Employee contactPerson, Address address, Division division) {
-        long mobilePhone =25;
-        long phone = 26;
-        String email = "test@test.com";
-        String firstName = "test";
-        String lastName = "test";
-        long divisionId = 1;
-        String divisionName = "test";
-
-        AddressDtoOutput addressDtoOutput = new AddressDtoOutput();
-
         return new ParkingLotDtoOutputList(
                 parkingLot.getId(),
                 parkingLot.getName(),
                 parkingLot.getLotCategory(),
                 parkingLot.getMaxCapacity(),
                 parkingLot.getPriceHour(),
-                addressDtoOutput,
-                firstName,
-                lastName,
-                phone,
-                mobilePhone,
-                email,
-                divisionId,
-                divisionName
+                addressMapper.addressToOutput(address),
+                contactPerson.getFirstName(),
+                contactPerson.getLastName(),
+                contactPerson.getTelephone(),
+                contactPerson.getMobilePhone(),
+                contactPerson.getEmail(),
+                division.getId(),
+                division.getName()
         );
 
     }

@@ -72,4 +72,8 @@ public class ParkingLot {
     public long getContactPersonId() {
         return contactPersonId;
     }
+
+    public long getDivisionId() {
+        return divisionId;
+    }
 }

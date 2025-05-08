@@ -13,9 +13,10 @@ import java.util.List;
 public interface ParkingLotRepository
         extends JpaRepository<ParkingLot, Long> {
 
-    List<ParkingLot> findAll();
+    @Query("select p.id, p.name, p.maxCapacity, p.contactPersonId from ParkingLot p")
+    List<ParkingLotMinInfo> findAllProjected();
 
-    @Query("select p.id, p.name, p.maxCapacity, p.contactPersonId from ParkingLot p where p.id = :parkingId")
-    List<ParkingLotMinInfo> findAllParkingLotMinInfo(@Param("parkingId") long parkingId);
+    ParkingLot findParkingLotById(long id);
+
 
 }
