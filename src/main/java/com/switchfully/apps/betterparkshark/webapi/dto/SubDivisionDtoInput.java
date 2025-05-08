@@ -1,27 +1,20 @@
 package com.switchfully.apps.betterparkshark.webapi.dto;
 
-public class DivisionDtoOutput {
+public class SubDivisionDtoInput {
 
     // FIELDS
-    private Long id;
     private String name;
     private String originalName;
     private Long directorId;
-    private Long parentId;
 
     // CONSTRUCTORS
-    public DivisionDtoOutput(Long id, String name, String originalName, Long directorId, Long parentId) {
-        this.id = id;
+    public SubDivisionDtoInput(String name, String originalName, Long directorId) {
         this.name = name;
         this.originalName = originalName;
         this.directorId = directorId;
-        this.parentId = parentId;
     }
 
     // GETTERS
-    public Long getId() {
-        return id;
-    }
     public String getName() {
         return name;
     }
@@ -30,8 +23,5 @@ public class DivisionDtoOutput {
     }
     public Long getDirectorId() {
         return directorId;
-    }
-    public Long getParentId() {
-        return parentId;
     }
 }
