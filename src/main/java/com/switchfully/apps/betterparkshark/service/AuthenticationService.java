@@ -1,4 +1,4 @@
 package com.switchfully.apps.betterparkshark.service;
 
-public class AuthentificationService {
+public class AuthenticationService {
 }
