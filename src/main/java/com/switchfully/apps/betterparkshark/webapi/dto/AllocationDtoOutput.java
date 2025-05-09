@@ -23,4 +23,28 @@ public class AllocationDtoOutput {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    public Long getAllocationId() {
+        return allocationId;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public Long getParkingId() {
+        return parkingId;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public Timestamp getEndTime() {
+        return endTime;
+    }
 }

@@ -14,6 +14,7 @@ public class ParkingLot {
     private String name;
 
     @Column(name = "lot_category",nullable = false)
+    @Enumerated(EnumType.STRING)
     private LotCategory lotCategory;
 
     @Column(name = "max_capacity",nullable = false)

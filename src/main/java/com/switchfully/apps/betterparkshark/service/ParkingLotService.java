@@ -25,6 +25,15 @@ public class ParkingLotService {
     private AddressMapper addressMapper;
     private DivisionRepository divisionRepository;
 
+    public ParkingLotService(ParkingLotRepository parkingLotRepository, ParkingLotMapper parkingLotMapper, EmployeeRepository employeeRepository, AddressRepository addressRepository, AddressMapper addressMapper, DivisionRepository divisionRepository) {
+        this.parkingLotRepository = parkingLotRepository;
+        this.parkingLotMapper = parkingLotMapper;
+        this.employeeRepository = employeeRepository;
+        this.addressRepository = addressRepository;
+        this.addressMapper = addressMapper;
+        this.divisionRepository = divisionRepository;
+    }
+
     public ParkingLotDtoOutputList createNewParkingLot(ParkingLotDtoInput parkingLotDtoInput) {
         // save address to get an idea for it
         Address address = addressRepository.save(addressMapper.inputToAddress(parkingLotDtoInput.getAddress()));
