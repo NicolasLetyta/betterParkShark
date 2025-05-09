@@ -56,6 +56,8 @@ public class MemberService {
         validateArgument(id,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(id).get();
         Address address = addressRepository.findById(member.getAddress()).orElse(null);
+        //The way the data flows makes it impossible to retreieve a member from the databse whos MembershipLevelId is null
+        //I can safely .get() from the optional without ever retrieving a null value
         MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
 
         return memberMapper.memberToOutput(member,address,membershipLevel.getName());
