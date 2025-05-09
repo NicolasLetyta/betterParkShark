@@ -10,7 +10,6 @@ import com.switchfully.apps.betterparkshark.repository.MembershipLevelRepository
 import com.switchfully.apps.betterparkshark.service.mapper.AddressMapper;
 import com.switchfully.apps.betterparkshark.service.mapper.MemberMapper;
 import com.switchfully.apps.betterparkshark.webapi.dto.*;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,10 +57,10 @@ public class MemberService {
         validateArgument(id,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(id).get();
 
-        Address address = addressRepository.findById(member.getAddress()).orElseGet(()->null);
+        Address address = addressRepository.findById(member.getAddress()).orElse(null);
         AddressDtoOutput addressDto = getDtoFromAddress(address);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
-        return memberMapper.memberToOutput(member,addressDto,membershipLevel.getName());
+        String membershipLevelName = membershipLevelRepository.findNameById(member.getMembershipLevel());
+        return memberMapper.memberToOutput(member,addressDto,membershipLevelName);
     }
 
     public List<MemberDtoOutputLight> findAllMembers() {
