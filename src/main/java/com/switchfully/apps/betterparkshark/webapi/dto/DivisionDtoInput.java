@@ -12,6 +12,7 @@ public class DivisionDtoInput {
         this.name = name;
         this.originalName = originalName;
         this.directorId = directorId;
+
     }
 
     // GETTERS

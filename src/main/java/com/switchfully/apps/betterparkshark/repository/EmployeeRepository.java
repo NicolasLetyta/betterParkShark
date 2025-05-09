@@ -1,4 +1,10 @@
 package com.switchfully.apps.betterparkshark.repository;
 
-public class EmployeeRepository {
+import com.switchfully.apps.betterparkshark.domain.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeRepository
+extends JpaRepository<Employee, Long> {
+
+    Employee findEmployeeById(long id);
 }
