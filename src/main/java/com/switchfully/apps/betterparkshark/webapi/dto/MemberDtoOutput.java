@@ -6,11 +6,11 @@ public class MemberDtoOutput {
     private long id;
     private String name;
     private String licensePlate;
-    private int phone;
+    private String phone;
     private String email;
     private LocalDateTime registrationDate;
 
-    public MemberDtoOutput(long id, String name, String licensePlate, int phone, String email, LocalDateTime registrationDate) {
+    public MemberDtoOutput(long id, String name, String licensePlate, String phone, String email, LocalDateTime registrationDate) {
         this.id = id;
         this.name = name;
         this.licensePlate = licensePlate;
@@ -31,7 +31,7 @@ public class MemberDtoOutput {
         return licensePlate;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
