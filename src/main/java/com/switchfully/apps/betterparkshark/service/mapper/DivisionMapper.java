@@ -34,7 +34,7 @@ public class DivisionMapper {
                 subDivisionDtoInput.getName(),
                 subDivisionDtoInput.getOriginalName(),
                 subDivisionDtoInput.getDirectorId(),
-                divisionDtoInput.getParentId()
+                subDivisionDtoInput.getParentId()
         );
     }
 }
