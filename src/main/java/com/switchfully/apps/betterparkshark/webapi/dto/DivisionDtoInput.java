@@ -6,14 +6,12 @@ public class DivisionDtoInput {
     private String name;
     private String originalName;
     private Long directorId;
-    private Long parentId;
 
     // CONSTRUCTORS
-    public DivisionDtoInput(String name, String originalName, Long directorId, Long parentId) {
+    public DivisionDtoInput(String name, String originalName, Long directorId) {
         this.name = name;
         this.originalName = originalName;
         this.directorId = directorId;
-        this.parentId = parentId;
     }
 
     // GETTERS
@@ -25,9 +23,6 @@ public class DivisionDtoInput {
     }
     public Long getDirectorId() {
         return directorId;
-    }
-    public Long getParentId() {
-        return parentId;
     }
 
 }

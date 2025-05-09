@@ -6,12 +6,14 @@ public class SubDivisionDtoInput {
     private String name;
     private String originalName;
     private Long directorId;
+    private Long parentId;
 
     // CONSTRUCTORS
-    public SubDivisionDtoInput(String name, String originalName, Long directorId) {
+    public SubDivisionDtoInput(String name, String originalName, Long directorId, Long parentId) {
         this.name = name;
         this.originalName = originalName;
         this.directorId = directorId;
+        this.parentId = parentId;
     }
 
     // GETTERS
@@ -23,5 +25,8 @@ public class SubDivisionDtoInput {
     }
     public Long getDirectorId() {
         return directorId;
+    }
+    public Long getParentId() {
+        return parentId;
     }
 }
