@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MemberMapperTest {
 
-
-    private MemberMapper memberMapper = new MemberMapper();
+    private AddressMapper addressMapper;
+    private MemberMapper memberMapper = new MemberMapper(addressMapper);
 
     Address address;
     MembershipLevel bronze;

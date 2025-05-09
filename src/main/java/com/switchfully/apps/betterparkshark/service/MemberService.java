@@ -25,7 +25,7 @@ public class MemberService {
     private final AddressMapper addressMapper;
     private final AddressRepository addressRepository;
 
-    private final long defaultMemberShipLevelId = 1L;
+    private final long defaultMembershipLevelId = 1L;
 
     public MemberService (MemberRepository memberRepository,
                           MemberMapper memberMapper,
@@ -44,47 +44,46 @@ public class MemberService {
 
         MembershipLevel membershipLevel = setMemberShipLevelToBronzeWhenNull(memberDtoInput);
         Address address = getAddressFromInput(memberDtoInput.getAddressDtoInput());
-        Long addressId = getIdFromAddress(address);
+        Long addressId = address == null ? null : address.getId();
 
         Member member = memberMapper.inputToMember(memberDtoInput, addressId,membershipLevel.getId());
         memberRepository.save(member);
 
-        AddressDtoOutput addressDto = getDtoFromAddress(address);
-        return memberMapper.memberToOutput(member,addressDto,membershipLevel.getName());
+        return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 
     public MemberDtoOutput findMemberById(Long id){
         validateArgument(id,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(id).get();
-
         Address address = addressRepository.findById(member.getAddress()).orElse(null);
-        AddressDtoOutput addressDto = getDtoFromAddress(address);
-        String membershipLevelName = membershipLevelRepository.findNameById(member.getMembershipLevel());
-        return memberMapper.memberToOutput(member,addressDto,membershipLevelName);
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
+
+        return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 
     public List<MemberDtoOutputLight> findAllMembers() {
         return memberMapper.projectedMembersToOutputLight(memberRepository.findAllMembersProjected());
     }
 
-    public MemberDtoOutput updateMemberShipLevel(long memberId, long memberShipLevelId) {
+    public MemberDtoOutput updateMemberShipLevel(long memberId, long membershipLevelId) {
         validateArgument(memberId,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
-        validateArgument(memberShipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
+        validateArgument(membershipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(memberId).get();
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(memberShipLevelId).get();
+        Address address = addressRepository.findById(member.getAddress()).orElse(null);
 
-        member.setMembershipLevel(memberShipLevelId);
+        member.setMembershipLevel(membershipLevelId);
         memberRepository.save(member);
-        return memberMapper.memberToOutput(member,null,membershipLevel.getName());
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
+        return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 
     private MembershipLevel setMemberShipLevelToBronzeWhenNull(MemberDtoInput memberDtoInput) {
         if(memberDtoInput.getMemberShipLevel() == null)
         {
-            return membershipLevelRepository.findById(defaultMemberShipLevelId).get();
+            return membershipLevelRepository.findById(defaultMembershipLevelId).get();
         }else {
-            long memberShipLevelId = memberDtoInput.getMemberShipLevel();
-            return membershipLevelRepository.findById(memberShipLevelId).get();
+            long membershipLevelId = memberDtoInput.getMemberShipLevel();
+            return membershipLevelRepository.findById(membershipLevelId).get();
         }
     }
 
@@ -94,14 +93,6 @@ public class MemberService {
         }else {
             Address address = addressMapper.inputToAddress(validateAddressDtoInput(addressDtoInput));
             return addressRepository.save(address);
-        }
-    }
-
-    private Long getIdFromAddress(Address address) {
-        if(address == null){
-            return null;
-        } else {
-            return address.getId();
         }
     }
 
@@ -129,7 +120,7 @@ public class MemberService {
         validateNonBlank(memberDtoInput.getLicensePlate(),"License plate cannot be null or blank",InvalidInputException::new);
 
         validateArgument(memberDtoInput.getEmail(),"Email already exists in repository", memberRepository::existsByEmail,InvalidInputException::new);
-        validateArgument(memberDtoInput.getEmail(),"License plate already exists in repository", memberRepository::existsByLicensePlate,InvalidInputException::new);
+        validateArgument(memberDtoInput.getLicensePlate(),"License plate already exists in repository", memberRepository::existsByLicensePlate,InvalidInputException::new);
         if(memberDtoInput.getMemberShipLevel() != null){
             validateArgument(memberDtoInput.getMemberShipLevel(),"Membership level id not found in repository",
                     id->!membershipLevelRepository.existsById(id),InvalidInputException::new);
