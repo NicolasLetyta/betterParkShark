@@ -3,14 +3,14 @@ package com.switchfully.apps.betterparkshark.webapi.dto;
 public class MemberDtoInput {
     private String firstName;
     private String lastName;
-    private Integer phone;
+    private String phone;
     private String email;
     private String password;
     private String licensePlate;
     private AddressDtoInput addressDtoInput;
     private Integer memberShipLevel;
 
-    public MemberDtoInput(String firstName, String lastName, Integer phone, String email, String password,
+    public MemberDtoInput(String firstName, String lastName, String phone, String email, String password,
                           String licensePlate, AddressDtoInput addressDtoInput, Integer memberShipLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,7 +30,7 @@ public class MemberDtoInput {
         return lastName;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 

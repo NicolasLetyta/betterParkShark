@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Component
 public class MemberMapper {
 
-    public Member inputToMember(MemberDtoInput memberDtoInput , Address address, MembershipLevel membershipLevel) {
+    public Member inputToMember(MemberDtoInput memberDtoInput, Address address, MembershipLevel membershipLevel) {
         return new Member(memberDtoInput.getFirstName(), memberDtoInput.getLastName(), memberDtoInput.getPhone(),
                 memberDtoInput.getEmail(), memberDtoInput.getPassword(), memberDtoInput.getLicensePlate(),
-                LocalDateTime.now(),address, membershipLevel);
+                LocalDateTime.now(),address.getId(), membershipLevel.getId());
     }
 
     public MemberDtoOutput memberToOutput(Member member) {

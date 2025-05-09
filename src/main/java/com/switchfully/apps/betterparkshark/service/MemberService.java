@@ -50,7 +50,7 @@ public class MemberService {
         MembershipLevel membershipLevel = setMemberShipLevelToBronzeWhenNull(memberDtoInput);
 
         Address address = addressMapper.inputToAddress(memberDtoInput.getAddressDtoInput());
-        address = addressRepository.save(address);
+        addressRepository.save(address);
 
         Member member = memberMapper.inputToMember(memberDtoInput, address,membershipLevel);
         memberRepository.save(member);
@@ -60,8 +60,7 @@ public class MemberService {
 
     public MemberDtoOutput updateMemberSipLevel(long memberId, long memberShipLevelId) {
         Member member = memberRepository.findById(memberId);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(memberShipLevelId);
-        member.setMembershipLevel(membershipLevel);
+        member.setMembershipLevel(memberShipLevelId);
         memberRepository.save(member);
         return memberMapper.memberToOutput(member);
     }

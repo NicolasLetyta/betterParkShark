@@ -21,7 +21,7 @@ public class Member {
     private String name;
 
     @Column(name = "phone")
-    private int phone;
+    private String phone;
 
     @Column(name = "email")
     private String email;
@@ -35,16 +35,16 @@ public class Member {
     @Column(name = "registration_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime registrationDate;
 
-    @ManyToOne
-    @JoinColumn(name ="address_id")
-    private Address address;
 
-    @ManyToOne
+    @JoinColumn(name ="address_id")
+    private long address;
+
+
     @JoinColumn(name ="membership_level_id")
-    private MembershipLevel membershipLevel;
+    private long membershipLevel;
 
     public Member() {}
-    public Member(String firstName, String lastName, int phone, String email, String password, String licensePlate, LocalDateTime registrationDate, Address address, MembershipLevel membershipLevel) {
+    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDateTime registrationDate, long address, long membershipLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -57,8 +57,8 @@ public class Member {
         this.membershipLevel = membershipLevel;
     }
 
-    public void setMembershipLevel(MembershipLevel membershipLevel) {
-        this.membershipLevel = membershipLevel;
+    public void setMembershipLevel(long membershipLevelId) {
+        this.membershipLevel = membershipLevelId;
     }
 
     public long getId() {
@@ -77,7 +77,7 @@ public class Member {
         return name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -97,11 +97,11 @@ public class Member {
         return registrationDate;
     }
 
-    public Address getAddress() {
+    public long getAddress() {
         return address;
     }
 
-    public MembershipLevel getMembershipLevel() {
+    public long getMembershipLevel() {
         return membershipLevel;
     }
 
