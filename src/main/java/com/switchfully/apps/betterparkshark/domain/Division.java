@@ -9,7 +9,7 @@ public class Division {
     // FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "division_seq")
-    @SequenceGenerator(name = "attraction_seq", sequenceName = "division_seq", allocationSize = 1)
+    @SequenceGenerator(name = "division_seq", sequenceName = "division_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "NAME")

@@ -46,5 +46,4 @@ public class DivisionService {
                 .map(divisionMapper::DivisionToOutput)
                 .toList();
     }
-
 }
