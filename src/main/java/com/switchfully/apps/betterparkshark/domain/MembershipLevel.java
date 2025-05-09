@@ -1,31 +1,29 @@
 package com.switchfully.apps.betterparkshark.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "membership_level")
 public class MembershipLevel {
     @Id
+    @SequenceGenerator(sequenceName = "membership_level_seq", name = "membership_level_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "membership_level_seq")
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "monthly_price")
+    @Column(name = "monthly_price", nullable = false)
     private double monthlyPrice;
 
-    @Column(name = "reduction_hour")
+    @Column(name = "reduction_hour", nullable = false)
     private double reductionHour;
 
-    @Column(name = "max_hour")
+    @Column(name = "max_hour", nullable = false)
     private double maxHour;
 
     public MembershipLevel() {}
-    public MembershipLevel(long id, String name, double monthlyPrice, double reductionHour, double maxHour) {
-        this.id = id;
+    public MembershipLevel(String name, double monthlyPrice, double reductionHour, double maxHour) {
         this.name = name;
         this.monthlyPrice = monthlyPrice;
         this.reductionHour = reductionHour;

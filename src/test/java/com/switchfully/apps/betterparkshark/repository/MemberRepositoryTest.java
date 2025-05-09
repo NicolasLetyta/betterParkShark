@@ -1,51 +1,51 @@
-package com.switchfully.apps.betterparkshark.service;
+package com.switchfully.apps.betterparkshark.repository;
 
 
 
 import com.switchfully.apps.betterparkshark.domain.Address;
 import com.switchfully.apps.betterparkshark.domain.Member;
 import com.switchfully.apps.betterparkshark.domain.MembershipLevel;
-import com.switchfully.apps.betterparkshark.repository.AddressRepository;
-import com.switchfully.apps.betterparkshark.repository.MemberRepository;
-import com.switchfully.apps.betterparkshark.repository.MembershipLevelRepository;
-import com.switchfully.apps.betterparkshark.service.mapper.AddressMapper;
-import com.switchfully.apps.betterparkshark.service.mapper.MemberMapper;
-import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoInput;
-import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoInput;
-import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoOutput;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
 @DataJpaTest
-public class MemberServiceTest {
+public class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private MembershipLevelRepository membershipLevelRepository;
+
+    private Address address;
+    private MembershipLevel bronzeMembership;
+    private MembershipLevel silverMembership;
+    private MembershipLevel goldMembership;
+
+    @BeforeEach
+    void setUp() {
+        address = new Address("street","number","2000","city","country");
+        addressRepository.save(address);
+        bronzeMembership = new MembershipLevel("bronze",0,0,4);
+        silverMembership = new MembershipLevel("silver",10,20,6);
+        goldMembership = new MembershipLevel("gold",40,30,24);
+        membershipLevelRepository.save(bronzeMembership);
+        membershipLevelRepository.save(silverMembership);
+        membershipLevelRepository.save(goldMembership);
+    }
 
     @Test
     void createMember() {
-        //AddressDtoInput addressDtoInput = new AddressDtoInput("street","")
-        //MemberDtoInput memberDtoInput = new MemberDtoInput()
         Member member = new Member("name","name","phone","email","pass",
                 "plate",LocalDateTime.now(),1,1);
         long id = member.getId();
         Member result = memberRepository.save(member);
-        Address test = addressRepository.findById(1);
-        System.out.println(test);
 
         assertThat(result.getId()).isEqualTo(1);
     }
