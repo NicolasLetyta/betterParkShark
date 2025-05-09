@@ -41,8 +41,8 @@ public class ParkingLotDtoInput {
         return priceHour;
     }
 
-    public long getAddress() {
-        return 1;
+    public AddressDtoInput getAddress() {
+        return address;
     }
 
     public long getContactPersonId() {
