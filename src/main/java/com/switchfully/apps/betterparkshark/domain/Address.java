@@ -11,23 +11,19 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
     private long id;
 
-    @Column(name = "street")
-    @NonNull
+    @Column(name = "street", nullable = false)
     private String street;
 
     @Column(name = "street_number")
     private String streetNumber;
 
-    @Column(name = "postal_code")
-    @NonNull
+    @Column(name = "postal_code",nullable = false)
     private String postalCode;
 
-    @Column(name = "city")
-    @NonNull
+    @Column(name = "city",nullable = false)
     private String city;
 
-    @Column(name = "country")
-    @NonNull
+    @Column(name = "country",nullable = false)
     private String country;
 
     public Address() {}
