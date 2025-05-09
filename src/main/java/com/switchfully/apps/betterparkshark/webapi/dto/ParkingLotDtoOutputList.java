@@ -8,6 +8,7 @@ public class ParkingLotDtoOutputList {
     private String name;
     private LotCategory category;
     private int maxCapacity;
+    private int spaceAvailable;
     private double priceHour;
     private AddressDtoOutput addressParkingLot;
     private String employeeFirstName;
@@ -21,11 +22,12 @@ public class ParkingLotDtoOutputList {
     public ParkingLotDtoOutputList() {
     }
 
-    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeEmail,long divisionId,  String divisionName) {
+    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, int spaceAvailable,double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeEmail,long divisionId,  String divisionName) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.maxCapacity = maxCapacity;
+        this.spaceAvailable = spaceAvailable;
         this.priceHour = priceHour;
         this.addressParkingLot = addressParkingLot;
         this.employeeFirstName = employeeFirstName;
@@ -36,11 +38,12 @@ public class ParkingLotDtoOutputList {
         this.divisionName = divisionName;
     }
 
-    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeMobile, String employeeEmail,long divisionId, String divisionName) {
+    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, int spaceAvailable, double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeMobile, String employeeEmail,long divisionId, String divisionName) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.maxCapacity = maxCapacity;
+        this.spaceAvailable = spaceAvailable;
         this.priceHour = priceHour;
         this.addressParkingLot = addressParkingLot;
         this.employeeFirstName = employeeFirstName;
@@ -66,6 +69,10 @@ public class ParkingLotDtoOutputList {
 
     public int getMaxCapacity() {
         return maxCapacity;
+    }
+
+    public int getSpaceAvailable() {
+        return spaceAvailable;
     }
 
     public double getPriceHour() {

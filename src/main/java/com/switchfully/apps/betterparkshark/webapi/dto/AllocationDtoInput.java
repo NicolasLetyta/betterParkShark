@@ -10,7 +10,7 @@ public class AllocationDtoInput {
 
     }
 
-    public AllocationDtoInput(long memberId, String licensePlate, long parkingId) {
+    public AllocationDtoInput(Long memberId, String licensePlate, long parkingId) {
         this.memberId = memberId;
         this.licensePlate = licensePlate;
         this.parkingId = parkingId;

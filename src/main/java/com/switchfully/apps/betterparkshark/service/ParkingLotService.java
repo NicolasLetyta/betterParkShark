@@ -59,7 +59,7 @@ public class ParkingLotService {
 
     }
 
-    public ParkingLotDtoOutputList findParkingLotById(Long id) {
+    public ParkingLotDtoOutputList findParkingLotById(long id) {
         ParkingLot parkingLot = parkingLotRepository.findParkingLotById(id);
         Employee contactPerson = employeeRepository.findEmployeeById(parkingLot.getContactPersonId());
         Address address = addressRepository.findById(parkingLot.getAddressId());

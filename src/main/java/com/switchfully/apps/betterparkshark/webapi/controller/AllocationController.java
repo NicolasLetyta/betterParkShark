@@ -1,6 +1,8 @@
 package com.switchfully.apps.betterparkshark.webapi.controller;
 
+import com.switchfully.apps.betterparkshark.domain.Member;
 import com.switchfully.apps.betterparkshark.service.AllocationService;
+import com.switchfully.apps.betterparkshark.webapi.dto.AllocationDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.AllocationDtoOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,7 @@ public class AllocationController {
         return allocationService.getAllAllocations(limit, status, order);
     }
 
-    @GetMapping("/member/{memberId}")
+    @GetMapping(path = "/member/{memberId}",produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<AllocationDtoOutput> getAllocationsByMember(
             @PathVariable Long memberId,
@@ -36,12 +38,26 @@ public class AllocationController {
         return allocationService.getAllocationsByMemberId(memberId, status);
     }
 
-    @GetMapping("/parkinglot/{parkingLotId}")
+    @GetMapping(path = "/parkinglot/{parkingLotId}",produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<AllocationDtoOutput> getAllocationsByParkingLot(
             @PathVariable Long parkingLotId,
             @RequestParam(defaultValue = "ALL") String status
     ) {
         return allocationService.getAllocationsByParkingId(parkingLotId, status);
+    }
+
+    @PostMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AllocationDtoOutput createAllocation(AllocationDtoInput allocationDtoInput) {
+        Member member = new Member();
+        return allocationService.createNewAllocation(allocationDtoInput, member);
+    }
+
+    @PostMapping(path = "/{id}", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public AllocationDtoOutput stopAllocation(@PathVariable Long id) {
+        Member member = new Member();
+        return allocationService.stopAllocation(id, member);
     }
 }

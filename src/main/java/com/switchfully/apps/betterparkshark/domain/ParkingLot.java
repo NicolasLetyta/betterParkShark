@@ -14,11 +14,13 @@ public class ParkingLot {
     private String name;
 
     @Column(name = "lot_category",nullable = false)
-    @Enumerated(EnumType.STRING)
     private LotCategory lotCategory;
 
     @Column(name = "max_capacity",nullable = false)
     private int maxCapacity;
+
+    @Column(name = "space_available")
+    private int spaceAvailable;
 
     @Column(name = "price_hour")
     private double priceHour;
@@ -39,6 +41,7 @@ public class ParkingLot {
         this.name = name;
         this.lotCategory = lotCategory;
         this.maxCapacity = maxCapacity;
+        this.spaceAvailable = maxCapacity;
         this.priceHour = priceHour;
         this.contactPersonId = contactPersonId;
         this.addressId = addressId;
@@ -75,5 +78,13 @@ public class ParkingLot {
 
     public long getDivisionId() {
         return divisionId;
+    }
+
+    public int getSpaceAvailable() {
+        return spaceAvailable;
+    }
+
+    public void setSpaceAvailable(int spaceAvailable) {
+        this.spaceAvailable = spaceAvailable;
     }
 }

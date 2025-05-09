@@ -44,6 +44,7 @@ public class ParkingLotMapper {
                 parkingLot.getName(),
                 parkingLot.getLotCategory(),
                 parkingLot.getMaxCapacity(),
+                parkingLot.getSpaceAvailable(),
                 parkingLot.getPriceHour(),
                 addressMapper.addressToOutput(address),
                 contactPerson.getFirstName(),

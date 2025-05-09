@@ -10,6 +10,8 @@ public interface AllocationRepository
 
     List<Allocation> findAll();
 
+    Allocation findById(long id);
+
     // find by member
     List<Allocation> findByMemberId(long memberId);
     // member and status
