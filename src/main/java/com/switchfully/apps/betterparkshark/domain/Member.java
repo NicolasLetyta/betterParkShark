@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.NonNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,26 +27,26 @@ public class Member {
     @NonNull
     private String phone;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "license_plate", nullable = false)
+    @Column(name = "license_plate", nullable = false, unique = true)
     private String licensePlate;
 
-    @Column(name = "registration_date", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime registrationDate;
+    @Column(name = "registration_date", columnDefinition = "DATE", nullable = false)
+    private LocalDate registrationDate;
 
     @JoinColumn(name ="address_id")
-    private long address;
+    private Long address;
 
     @JoinColumn(name ="membership_level_id",nullable = false)
     private long membershipLevel;
 
     public Member() {}
-    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDateTime registrationDate, long address, long membershipLevel) {
+    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDate registrationDate, Long address, Long membershipLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -58,7 +59,7 @@ public class Member {
         this.membershipLevel = membershipLevel;
     }
 
-    public void setMembershipLevel(long membershipLevelId) {
+    public void setMembershipLevel(Long membershipLevelId) {
         this.membershipLevel = membershipLevelId;
     }
 
@@ -94,11 +95,11 @@ public class Member {
         return licensePlate;
     }
 
-    public LocalDateTime getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public long getAddress() {
+    public Long getAddress() {
         return address;
     }
 
@@ -116,6 +117,6 @@ public class Member {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return id == member.id;
+        return this.id == member.id;
     }
 }

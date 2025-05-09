@@ -1,5 +1,6 @@
 package com.switchfully.apps.betterparkshark.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface MemberProjection {
@@ -8,6 +9,6 @@ public interface MemberProjection {
     String getLicensePlate();
     String getPhone();
     String getEmail();
-    LocalDateTime getRegistrationDate();
+    LocalDate getRegistrationDate();
 
 }

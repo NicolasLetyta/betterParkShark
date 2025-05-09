@@ -68,7 +68,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id == address.id;
+        return this.id == address.id;
     }
     @Override
     public String toString() {

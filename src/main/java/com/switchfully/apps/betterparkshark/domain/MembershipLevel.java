@@ -49,4 +49,17 @@ public class MembershipLevel {
     public double getMaxHour() {
         return maxHour;
     }
+
+    @Override
+    public String toString() {
+        return this.id +" "+this.name + " " + this.monthlyPrice + " " + this.reductionHour + " " + this.maxHour;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MembershipLevel that = (MembershipLevel) o;
+        return this.id == that.id;
+    }
 }

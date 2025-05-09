@@ -59,7 +59,7 @@ public class AddressRepositoryTest {
     void givenAddressExistsInDatabase_whenFindById_thenReturnAddressFromDatabase() {
         Address savedAddress = addressRepository.save(address);
 
-        Address result = addressRepository.findById(savedAddress.getId());
+        Address result = addressRepository.findById(savedAddress.getId()).get();
 
         assertThat(result).isEqualTo(savedAddress);
     }

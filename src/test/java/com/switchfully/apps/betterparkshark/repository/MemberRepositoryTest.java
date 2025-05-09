@@ -10,8 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 public class MemberRepositoryTest {
@@ -24,30 +28,100 @@ public class MemberRepositoryTest {
     private MembershipLevelRepository membershipLevelRepository;
 
     private Address address;
-    private MembershipLevel bronzeMembership;
-    private MembershipLevel silverMembership;
-    private MembershipLevel goldMembership;
+    private MembershipLevel bronze;
+    private MembershipLevel silver;
+    private MembershipLevel gold;
+    private Member member;
 
     @BeforeEach
     void setUp() {
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
-        bronzeMembership = new MembershipLevel("bronze",0,0,4);
-        silverMembership = new MembershipLevel("silver",10,20,6);
-        goldMembership = new MembershipLevel("gold",40,30,24);
-        membershipLevelRepository.save(bronzeMembership);
-        membershipLevelRepository.save(silverMembership);
-        membershipLevelRepository.save(goldMembership);
+        bronze = new MembershipLevel("bronze",0,0,4);
+        silver = new MembershipLevel("silver",10,20,6);
+        gold = new MembershipLevel("gold",40,30,24);
+        membershipLevelRepository.save(bronze);
+        membershipLevelRepository.save(silver);
+        membershipLevelRepository.save(gold);
+
+        member = new Member("name","name","phone","email","pass",
+                "plate",LocalDate.now(),1L,1L);
     }
 
     @Test
-    void createMember() {
-        Member member = new Member("name","name","phone","email","pass",
-                "plate",LocalDateTime.now(),1,1);
-        long id = member.getId();
+    void givenCorrectDomainMember_whenSaveMember_thenReturnMemberFromDatabase() {
         Member result = memberRepository.save(member);
 
-        assertThat(result.getId()).isEqualTo(1);
+        assertThat(result).isEqualTo(member);
+        assertThat(result.getMembershipLevel()).isEqualTo(1);
+    }
+
+    @Test
+    void givenInvalidDomainMember_whenSaveMember_thenThrowsException() {
+        Member invalidMember = new Member("name",null,"phone","email","pass",
+                "plate", LocalDate.now(),0L,3L);
+
+        assertThrows(Exception.class, () -> memberRepository.save(invalidMember));
+    }
+
+    @Test
+    void givenMemberExistsInDatabase_whenFindById_thenReturnMemberFromDatabase() {
+        memberRepository.save(member);
+
+        Member result = memberRepository.findById(member.getId()).get();
+
+        assertThat(result).isEqualTo(member);
+    }
+
+    @Test
+    void givenMultipleMembersInDatabase_whenFindAllMembersProjected_thenReturnAllMembersProjected() {
+        Member member1 = new Member("name1","name1","phone1","email1","pass1",
+                "plate1",LocalDate.now(),1L,1L);
+        Member member2 = new Member("name2","name2","phone2","email2","pass2",
+                "plate2",LocalDate.now(),1L,2L);
+        Member member3 = new Member("name3","name3","phone3","email3","pass3",
+                "plate3",LocalDate.now(),1L,3L);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+
+        List<MemberProjection> result = memberRepository.findAllMembersProjected();
+        assertThat(result).hasSize(3);
+
+        assertThat(result.get(0).getEmail()).isEqualTo(member1.getEmail());
+        assertThat(result.get(0).getLicensePlate()).isEqualTo(member1.getLicensePlate());
+        assertThat(result.get(0).getName()).isEqualTo(member1.getName());
+        assertThat(result.get(0).getId()).isEqualTo(member1.getId());
+        assertThat(result.get(0).getPhone()).isEqualTo(member1.getPhone());
+        assertThat(result.get(0).getRegistrationDate()).isEqualTo(member1.getRegistrationDate());
+
+        assertThat(result.get(1).getEmail()).isEqualTo(member2.getEmail());
+        assertThat(result.get(1).getLicensePlate()).isEqualTo(member2.getLicensePlate());
+        assertThat(result.get(1).getName()).isEqualTo(member2.getName());
+        assertThat(result.get(1).getId()).isEqualTo(member2.getId());
+        assertThat(result.get(1).getPhone()).isEqualTo(member2.getPhone());
+        assertThat(result.get(1).getRegistrationDate()).isEqualTo(member2.getRegistrationDate());
+
+        assertThat(result.get(2).getEmail()).isEqualTo(member3.getEmail());
+        assertThat(result.get(2).getLicensePlate()).isEqualTo(member3.getLicensePlate());
+        assertThat(result.get(2).getName()).isEqualTo(member3.getName());
+        assertThat(result.get(2).getId()).isEqualTo(member3.getId());
+        assertThat(result.get(2).getPhone()).isEqualTo(member3.getPhone());
+        assertThat(result.get(2).getRegistrationDate()).isEqualTo(member3.getRegistrationDate());
+    }
+
+    @Test
+    void whenSavingMembersWithIdenticalUniqueEnforcedFields_thenThrowsException() {
+        Member member1 = new Member("name1","name1","phone1","email1","pass1",
+                "plate1",LocalDate.now(),1L,1L);
+        Member member2 = new Member("name1","name1","phone1","email1","pass1",
+                "plate1",LocalDate.now(),1L,1L);
+
+        memberRepository.save(member1);
+
+        assertThrows(Exception.class, () -> {memberRepository.save(member2);
+        memberRepository.flush();});
     }
 
 
