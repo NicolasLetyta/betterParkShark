@@ -33,6 +33,8 @@ public class MemberServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Test
     void createMember() {
@@ -42,6 +44,8 @@ public class MemberServiceTest {
                 "plate",LocalDateTime.now(),1,1);
         long id = member.getId();
         Member result = memberRepository.save(member);
+        Address test = addressRepository.findById(1);
+        System.out.println(test);
 
         assertThat(result.getId()).isEqualTo(1);
     }
