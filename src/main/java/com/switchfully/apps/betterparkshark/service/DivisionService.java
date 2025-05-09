@@ -6,7 +6,9 @@ import com.switchfully.apps.betterparkshark.service.mapper.DivisionMapper;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.SubDivisionDtoInput;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class DivisionService {
 
     public DivisionDtoOutput getDivision(Long id) {
         Division division = divisionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Division not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Division not found"));
         return divisionMapper.DivisionToOutput(division);
     }
 

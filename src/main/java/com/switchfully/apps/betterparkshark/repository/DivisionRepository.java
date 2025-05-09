@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
 public interface DivisionRepository extends JpaRepository<Division, Long> {
 
-    Division findById(long id);
+    Optional<Division> findById(long id);
     List<Division> findAll();
 }

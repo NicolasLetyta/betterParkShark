@@ -12,13 +12,13 @@ public class Division {
     @SequenceGenerator(name = "division_seq", sequenceName = "division_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "ORIGINAL_NAME")
+    @Column(name = "ORIGINAL_NAME", nullable = false)
     private String originalName;
 
-    @Column (name  = "director_id")
+    @Column (name  = "director_id", nullable = false)
     private Long directorId;
 
     @Column(name = "PARENT_ID")
