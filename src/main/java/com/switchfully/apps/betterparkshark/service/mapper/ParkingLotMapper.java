@@ -51,33 +51,4 @@ public class ParkingLotMapper {
 
     }
 
-//    public ParkingLotDtoOutput parkingLotToOutput1Phone(ParkingLot parkingLot, Employee contactPerson) {
-//        return new ParkingLotDtoOutput(
-//                parkingLot.getId(),
-//                parkingLot.getName(),
-//                parkingLot.getMaxCapacity(),
-//                contactPerson.getMobilePhone(),
-//                contactPerson.getEmail()
-//        );
-//    }
-
-//    public ParkingLotDtoOutputList parkingLotToOutputList1Phone(ParkingLot parkingLot, Employee contactPerson, Address address, Division division) {
-//        return new ParkingLotDtoOutputList(
-//                parkingLot.getId(),
-//                parkingLot.getName(),
-//                parkingLot.getLotCategory(),
-//                parkingLot.getMaxCapacity(),
-//                parkingLot.getPriceHour(),
-//                addressMapper.addressToOutput(address),
-//                contactPerson.getFirstName(),
-//                contactPerson.getLastName(),
-//                contactPerson.getMobilePhone(),
-//                contactPerson.getEmail(),
-//                division.getId(),
-//                division.getName()
-//        );
-//
-//    }
-
-
 }

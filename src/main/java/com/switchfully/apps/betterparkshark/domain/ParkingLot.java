@@ -10,25 +10,25 @@ public class ParkingLot {
     @Id
     private long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "lot_category")
+    @Column(name = "lot_category",nullable = false)
     private LotCategory lotCategory;
 
-    @Column(name = "max_capacity")
+    @Column(name = "max_capacity",nullable = false)
     private int maxCapacity;
 
     @Column(name = "price_hour")
     private double priceHour;
 
-    @Column(name = "contact_person")
+    @Column(name = "contact_person",nullable = false)
     private long contactPersonId;
 
-    @Column(name = "address_id")
+    @Column(name = "address_id",nullable = false)
     private long addressId;
 
-    @Column(name = "division_id")
+    @Column(name = "division_id",nullable = false)
     private long divisionId;
 
     public ParkingLot() {
@@ -68,7 +68,6 @@ public class ParkingLot {
         return addressId;
     }
 
-    // only email and telephone
     public long getContactPersonId() {
         return contactPersonId;
     }
