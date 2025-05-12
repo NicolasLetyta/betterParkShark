@@ -1,4 +1,3 @@
-/*
 
 package com.switchfully.apps.betterparkshark.service;
 
@@ -17,7 +16,7 @@ import static com.switchfully.apps.betterparkshark.utility.Validation.validateAr
 
 @Service
 public class AuthenticationService {
-
+/*
     private final MemberRepository memberRepository;
 
     public AuthenticationService(MemberRepository memberRepository) {
@@ -57,9 +56,10 @@ public class AuthenticationService {
         validateArgument(member,"User does not have admin privileges",RESPONSE_STATUS_EXCEPTION,u->!u.getRole().equals(UserRole.ADMIN));
         return member;
     }
+
+ */
 }
 
-*/
 
 
 
