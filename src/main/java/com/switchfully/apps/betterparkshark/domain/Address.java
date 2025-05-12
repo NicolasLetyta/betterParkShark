@@ -58,6 +58,8 @@ public class Address {
         return city;
     }
 
+    public String getPostalCodeArea() { return postalCode +" "+ city; }
+
     @NonNull
     public String getCountry() {
         return country;
@@ -72,6 +74,6 @@ public class Address {
     }
     @Override
     public String toString() {
-        return this.id + " " + street + " " + streetNumber + " " + postalCode + " " + city + " " + country;
+        return this.id + " " + street + " " + streetNumber + " " + getPostalCodeArea() + " " + city + " " + country;
     }
 }

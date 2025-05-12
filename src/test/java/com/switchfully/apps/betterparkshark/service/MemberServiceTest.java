@@ -93,7 +93,7 @@ public class MemberServiceTest {
     void givenMemberDtoInputWithAddressDtoInputAndMemberShipLevelId_whenRegisterAsMember_thenReturnMemberDtoOutput() {
         AddressDtoInput addressDtoInput = new AddressDtoInput("street","number","2000",
                 "city","country");
-        AddressDtoOutput addressDtoOutput = new AddressDtoOutput(lastAddressId+1,"street","number",
+        AddressDtoOutput addressDtoOutput = new AddressDtoOutput("street","number",
                 "2000","city","country");
 
         MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","phone",

@@ -20,13 +20,9 @@ public class Member {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Transient
-    private String name;
-
     @Column(name = "phone")
     @NonNull
     private String phone;
-
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -51,7 +47,6 @@ public class Member {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-        this.name = firstName + " " + lastName;
         this.email = email;
         this.password = password;
         this.licensePlate = licensePlate;
@@ -77,7 +72,7 @@ public class Member {
     }
 
     public String getName() {
-        return name;
+        return this.firstName + " " + this.lastName;
     }
 
     public String getPhone() {
