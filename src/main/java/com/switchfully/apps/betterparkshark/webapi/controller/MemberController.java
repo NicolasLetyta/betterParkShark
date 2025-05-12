@@ -8,6 +8,7 @@ import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoOutputLight;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/members")
@@ -43,11 +44,15 @@ public class MemberController {
     }
 
     @PatchMapping(path = "/{userId}",consumes = "application/json",produces = "application/json")
-    public MemberDtoOutput updateMembershipLevel(@PathVariable("userId") long userId,
-                                                 @RequestBody int memberShipLevel,
+    public MemberDtoOutput updateMembershipLevel(@PathVariable("userId") Long userId,
+                                                 @RequestBody Map<String, Long> body,
                                                  @RequestHeader(value = "Authorization") String authToken ) {
         //AUTHORIZE AS MEMBER
         //Member member = !(authorize user as member from authorizationservice)!
-        return memberService.updateMemberShipLevel(userId, memberShipLevel);
+        System.out.println(body);
+
+        Long membershipLevelId = body.get("membershipLevel");
+        System.out.println(membershipLevelId);
+        return memberService.updateMemberShipLevel(userId, membershipLevelId);
     }
 }

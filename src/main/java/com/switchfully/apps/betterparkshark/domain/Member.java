@@ -44,7 +44,7 @@ public class Member {
     private Long addressId;
 
     @Column(name ="membership_level_id",nullable = false)
-    private long membershipLevelId;
+    private Long membershipLevelId;
 
     public Member() {}
     public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDate registrationDate, Long addressId, Long membershipLevelId) {
@@ -104,7 +104,7 @@ public class Member {
         return addressId;
     }
 
-    public long getMembershipLevelId() {
+    public Long getMembershipLevelId() {
         return membershipLevelId;
     }
 

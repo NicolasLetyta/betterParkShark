@@ -23,10 +23,10 @@ public class Allocation {
     private Long parkingId;
 
     @Column(name = "start_time",nullable = false)
-    private Timestamp startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    private Timestamp endTime;
+    private LocalDateTime endTime;
 
     public Allocation() {
     }
@@ -35,7 +35,7 @@ public class Allocation {
         this.memberId = memberId;
         this.licensePlate = licensePlate;
         this.parkingId = parkingId;
-        this.startTime = Timestamp.valueOf(LocalDateTime.now().withNano(0));
+        this.startTime = LocalDateTime.now().withNano(0);
     }
 
     public Long getId() {
@@ -54,15 +54,15 @@ public class Allocation {
         return parkingId;
     }
 
-    public Timestamp getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public Timestamp getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 }

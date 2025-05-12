@@ -79,7 +79,7 @@ public class AllocationService {
             throw new IllegalArgumentException("You can not stop this allocation, it has already been stopped");
         }
         // set end time as now
-        allocation.setEndTime(Timestamp.valueOf(LocalDateTime.now().withNano(0)));
+        allocation.setEndTime(LocalDateTime.now().withNano(0));
         // update database, both with end time and add new available spot in parking lot
         ParkingLot parkingLot = checkExistingParkingLot(allocation.getParkingId());
         parkingLot.setSpaceAvailable(parkingLot.getSpaceAvailable() + 1);

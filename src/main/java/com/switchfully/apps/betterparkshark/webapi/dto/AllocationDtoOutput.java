@@ -1,6 +1,7 @@
 package com.switchfully.apps.betterparkshark.webapi.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class AllocationDtoOutput {
 
@@ -8,14 +9,14 @@ public class AllocationDtoOutput {
     private Long memberId;
     private String licensePlate;
     private Long parkingId;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public AllocationDtoOutput() {
 
     }
 
-    public AllocationDtoOutput(Long allocationId, Long memberId, String licensePlate, Long parkingId, Timestamp startTime, Timestamp endTime) {
+    public AllocationDtoOutput(Long allocationId, Long memberId, String licensePlate, Long parkingId, LocalDateTime startTime, LocalDateTime endTime) {
         this.allocationId = allocationId;
         this.memberId = memberId;
         this.licensePlate = licensePlate;
@@ -40,11 +41,11 @@ public class AllocationDtoOutput {
         return parkingId;
     }
 
-    public Timestamp getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public Timestamp getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 }

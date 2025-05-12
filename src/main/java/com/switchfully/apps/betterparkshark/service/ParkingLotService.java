@@ -66,6 +66,7 @@ public class ParkingLotService {
     public ParkingLotDtoOutputList findParkingLotById(long id) {
         validateArgument(id,"Parking lot not found in repository", i->!parkingLotRepository.existsById(i),InvalidInputException::new);
         ParkingLot parkingLot = parkingLotRepository.findById(id).get();
+        System.out.println(parkingLot);
         Employee contactPerson = employeeRepository.findEmployeeById(parkingLot.getContactPersonId());
         validateArgument(parkingLot.getAddressId(),"Address not found in repository", i->!addressRepository.existsById(i),InvalidInputException::new);
         Address address = addressRepository.findById(parkingLot.getAddressId()).get();

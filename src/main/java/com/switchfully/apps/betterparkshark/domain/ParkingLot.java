@@ -14,6 +14,7 @@ public class ParkingLot {
     private String name;
 
     @Column(name = "lot_category",nullable = false)
+    @Enumerated(EnumType.STRING)
     private LotCategory lotCategory;
 
     @Column(name = "max_capacity",nullable = false)
@@ -86,5 +87,20 @@ public class ParkingLot {
 
     public void setSpaceAvailable(int spaceAvailable) {
         this.spaceAvailable = spaceAvailable;
+    }
+
+    @Override
+    public String toString() {
+        return "ParkingLot{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lotCategory=" + lotCategory +
+                ", maxCapacity=" + maxCapacity +
+                ", spaceAvailable=" + spaceAvailable +
+                ", priceHour=" + priceHour +
+                ", contactPersonId=" + contactPersonId +
+                ", addressId=" + addressId +
+                ", divisionId=" + divisionId +
+                '}';
     }
 }

@@ -27,4 +27,13 @@ public class AllocationDtoInput {
     public Long getParkingId() {
         return parkingId;
     }
+
+    @Override
+    public String toString() {
+        return "AllocationDtoInput{" +
+                "memberId=" + memberId +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", parkingId=" + parkingId +
+                '}';
+    }
 }
