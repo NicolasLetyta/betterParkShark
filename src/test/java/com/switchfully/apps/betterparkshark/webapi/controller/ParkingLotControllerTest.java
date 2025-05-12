@@ -2,6 +2,7 @@ package com.switchfully.apps.betterparkshark.webapi.controller;
 
 import com.switchfully.apps.betterparkshark.domain.*;
 import com.switchfully.apps.betterparkshark.repository.*;
+import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoInput;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,7 @@ public class ParkingLotControllerTest {
 
     private Employee employee;
     private Address address;
+    private AddressDtoInput addressDto;
     private Member member1;
     private Member member2;
     private Division division;
@@ -65,7 +67,24 @@ public class ParkingLotControllerTest {
 
     @Test
     void testCreateNewParkingLot() {
-        ParkingLotDtoInput parkingLotDtoInput = new ParkingLotDtoInput();
+        addressDto = new AddressDtoInput("street","number","2000","city","country");
+        ParkingLotDtoInput parkingLotDtoInput = new ParkingLotDtoInput("ParkingLot","GROUND_BUILDING", 250, 2.5, addressDto,1L,1L );
+
+        given()
+                .contentType("application/json")
+                .body(parkingLotDtoInput)
+                .when()
+                .post("/parking_lots")
+                .then()
+                .statusCode(201)
+                .body("id",equalTo(1))
+                .body("name",equalTo("ParkingLot"))
+                .body("category",equalTo(LotCategory.GROUND_BUILDING))
+                .body("employeePhone", equalTo("phone"))
+                .body("employeeFirstName", equalTo("name"))
+                .body("parkingLotAddress.street", equalTo("street"))
+                .body("parkingLotAddress.number", equalTo("number"));
+
     }
 
     @Test
@@ -76,7 +95,7 @@ public class ParkingLotControllerTest {
         parkingLotRepository.save(new ParkingLot("test2", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L));
 
         when()
-                .get("/parking_lot")
+                .get("/parking_lots")
                 .then()
                 .statusCode(200)
                 .body("size()", equalTo(2))
@@ -90,7 +109,7 @@ public class ParkingLotControllerTest {
         parkingLotRepository.save(new ParkingLot("test", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L));
 
         when()
-                .get("/parking_lot/1")
+                .get("/parking_lots/1")
                 .then()
                 .statusCode(200)
                 .body("size()", equalTo(1))

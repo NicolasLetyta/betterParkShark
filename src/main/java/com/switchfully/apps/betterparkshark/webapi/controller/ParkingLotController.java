@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="parking_lot")
+@RequestMapping(value="parking_lots")
 public class ParkingLotController {
     private static final Logger logger = LoggerFactory.getLogger(ParkingLotController.class);
 
