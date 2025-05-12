@@ -1,26 +1,28 @@
 
 package com.switchfully.apps.betterparkshark.service;
 
+import com.switchfully.apps.betterparkshark.domain.Employee;
+import com.switchfully.apps.betterparkshark.domain.EmployeeCategory;
 import com.switchfully.apps.betterparkshark.domain.Member;
 import com.switchfully.apps.betterparkshark.exception.InvalidHeaderException;
+import com.switchfully.apps.betterparkshark.repository.EmployeeRepository;
 import com.switchfully.apps.betterparkshark.repository.MemberRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Base64;
-import java.util.Optional;
-import java.util.function.Function;
+import java.util.Objects;
 
 import static com.switchfully.apps.betterparkshark.utility.Validation.validateArgument;
 
 @Service
 public class AuthenticationService {
-/*
-    private final MemberRepository memberRepository;
 
-    public AuthenticationService(MemberRepository memberRepository) {
+    private final MemberRepository memberRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public AuthenticationService(MemberRepository memberRepository, EmployeeRepository employeeRepository) {
         this.memberRepository = memberRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public String encode (String email, String password) {
@@ -41,23 +43,32 @@ public class AuthenticationService {
         return decodedArray;
     }
 
-    public Member authenticateUser(String authHeader) {
+    public Member authenticateMember(String authHeader) {
         String[] decodedArray = decode(authHeader);
         String email = decodedArray[0];
         String password = decodedArray[1];
 
         Member member = memberRepository.findByEmail(email);
-        validateArgument(member,"Invalid email or password", m->!m.getPassword().equals(password));
+
+        validateArgument(member,"User doesn't exist", Objects::isNull);
+        validateArgument(member,"Invalid password", m->!m.getPassword().equals(password));
+
         return member;
     }
 
-    public Member authenticateAdmin(String authHeader) {
-        Member member = authenticateUser(authHeader);
-        validateArgument(member,"User does not have admin privileges",RESPONSE_STATUS_EXCEPTION,u->!u.getRole().equals(UserRole.ADMIN));
-        return member;
-    }
+    public Employee authenticateAdmin(String authHeader) {
+        String[] decodedArray = decode(authHeader);
+        String email = decodedArray[0];
+        String password = decodedArray[1];
 
- */
+        Employee employee = employeeRepository.findByEmail(email);
+
+        validateArgument(employee, "User is not a manager", e->!e.getTypeEmployee().equals(EmployeeCategory.ADMIN));
+        validateArgument(employee,"User doesn't exist", Objects::isNull);
+        validateArgument(employee,"Invalid password", e->!e.getPassword().equals(password));
+
+        return employee;
+    }
 }
 
 
