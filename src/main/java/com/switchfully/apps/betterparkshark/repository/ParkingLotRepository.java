@@ -15,4 +15,5 @@ public interface ParkingLotRepository
     @Query("select p.id as id, p.name as name, p.maxCapacity as maxCapacity, p.contactPersonId as contactPersonId from ParkingLot p")
     List<ParkingLotMinInfo> findAllProjected();
 
+    Boolean existsByName(String name);
 }
