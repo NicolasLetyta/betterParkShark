@@ -18,7 +18,7 @@ public class Division {
     @Column(name = "ORIGINAL_NAME", nullable = false)
     private String originalName;
 
-    @Column (name  = "director_id", nullable = false)
+    @Column (name  = "DIRECTOR_ID", nullable = false)
     private Long directorId;
 
     @Column(name = "PARENT_ID")

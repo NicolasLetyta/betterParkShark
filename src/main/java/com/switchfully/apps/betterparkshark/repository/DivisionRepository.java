@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface DivisionRepository extends JpaRepository<Division, Long> {
-
-    Optional<Division> findById(long id);
-    List<Division> findAll();
+    //
+    // All methods are inherited from JpaRepository
+    //    // save(), findById() and findAll() are used.
 }

@@ -6,6 +6,7 @@ public class SubDivisionDtoInput {
     private String name;
     private String originalName;
     private Long directorId;
+    private Long parentId;
 
     // CONSTRUCTORS
     public SubDivisionDtoInput(String name, String originalName, Long directorId, Long parentId) {
