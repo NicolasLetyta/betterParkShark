@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ParkingLotMapper {
 
-    private AddressMapper addressMapper;
+    private final AddressMapper addressMapper;
 
     public ParkingLotMapper(AddressMapper addressMapper) {
         this.addressMapper = addressMapper;
@@ -18,7 +18,7 @@ public class ParkingLotMapper {
     public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, Long addressId) {
         return new ParkingLot(
                 parkingLotDtoInput.getName(),
-                parkingLotDtoInput.getCategory(),
+                LotCategory.valueOf(parkingLotDtoInput.getCategory()),
                 parkingLotDtoInput.getMaxCapacity(),
                 parkingLotDtoInput.getPriceHour(),
                 parkingLotDtoInput.getContactPersonId(),
