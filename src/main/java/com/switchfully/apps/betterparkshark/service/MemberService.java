@@ -4,13 +4,13 @@ import com.switchfully.apps.betterparkshark.domain.Address;
 import com.switchfully.apps.betterparkshark.domain.Member;
 import com.switchfully.apps.betterparkshark.domain.MembershipLevel;
 import com.switchfully.apps.betterparkshark.repository.AddressRepository;
-import com.switchfully.apps.betterparkshark.repository.MemberProjection;
 import com.switchfully.apps.betterparkshark.exception.InvalidInputException;
 import com.switchfully.apps.betterparkshark.repository.MemberRepository;
 import com.switchfully.apps.betterparkshark.repository.MembershipLevelRepository;
 import com.switchfully.apps.betterparkshark.service.mapper.AddressMapper;
 import com.switchfully.apps.betterparkshark.service.mapper.MemberMapper;
 import com.switchfully.apps.betterparkshark.webapi.dto.*;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +27,7 @@ public class MemberService {
     private final AddressRepository addressRepository;
 
     private final long defaultMembershipLevelId = 1L;
+    private final String phoneRegex = "^\\+\\d{1,3}[-\\s()]*\\d{6,14}([-\\s()]*\\d{1,4})?$";
 
     public MemberService (MemberRepository memberRepository,
                           MemberMapper memberMapper,
@@ -56,17 +57,10 @@ public class MemberService {
     public MemberDtoOutput findMemberById(Long id){
         validateArgument(id,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(id).get();
-        System.out.println("Found member: " + member);
-        Address address = null;
-        if(member.getAddressId() != null){
-            address = addressRepository.findById(member.getAddressId()).orElse(null);
-        }
-        System.out.println("Found address: " + address);
+        Address address = findAddressOrNull(member.getAddressId());
         //The way the data flows makes it impossible to retreieve a member from the databse whos MembershipLevelId is null
         //I can safely .get() from the optional without ever retrieving a null value
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(id).get();
-        System.out.println("Found membershipLevel: " + membershipLevel);
-
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
         return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 
@@ -79,10 +73,8 @@ public class MemberService {
         validateArgument(membershipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
 
         Member member = memberRepository.findById(memberId).get();
-        Address address = null;
-        if(member.getAddressId() != null){
-            address = addressRepository.findById(member.getAddressId()).orElse(null);
-        }
+        Address address = findAddressOrNull(member.getAddressId());
+
         member.setMembershipLevelId(membershipLevelId);
         memberRepository.save(member);
         MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
@@ -90,11 +82,11 @@ public class MemberService {
     }
 
     private MembershipLevel setMemberShipLevelToBronzeWhenNull(MemberDtoInput memberDtoInput) {
-        if(memberDtoInput.getMemberShipLevel() == null)
+        if(memberDtoInput.getMembershipLevel() == null)
         {
             return membershipLevelRepository.findById(defaultMembershipLevelId).get();
         }else {
-            long membershipLevelId = memberDtoInput.getMemberShipLevel();
+            long membershipLevelId = memberDtoInput.getMembershipLevel();
             return membershipLevelRepository.findById(membershipLevelId).get();
         }
     }
@@ -108,12 +100,11 @@ public class MemberService {
         }
     }
 
-    private AddressDtoOutput getDtoFromAddress(Address address) {
-        if(address == null){
-            return null;
-        } else {
-            return addressMapper.addressToOutput(address);
+    private Address findAddressOrNull(Long addressId) {
+        if(addressId != null){
+            return addressRepository.findById(addressId).orElse(null);
         }
+        return null;
     }
 
     private AddressDtoInput validateAddressDtoInput(AddressDtoInput addressDtoInput) {
@@ -132,9 +123,12 @@ public class MemberService {
         validateNonBlank(memberDtoInput.getLicensePlate(),"License plate cannot be null or blank",InvalidInputException::new);
 
         validateArgument(memberDtoInput.getEmail(),"Email already exists in repository", memberRepository::existsByEmail,InvalidInputException::new);
+        validateArgument(memberDtoInput.getEmail(),"Invalid email format", e-> !EmailValidator.getInstance().isValid(e),InvalidInputException::new);
+        validateArgument(memberDtoInput.getPhone(),"Invalid phone number format", p->!p.matches(phoneRegex),InvalidInputException::new);
+
         validateArgument(memberDtoInput.getLicensePlate(),"License plate already exists in repository", memberRepository::existsByLicensePlate,InvalidInputException::new);
-        if(memberDtoInput.getMemberShipLevel() != null){
-            validateArgument(memberDtoInput.getMemberShipLevel(),"Membership level id not found in repository",
+        if(memberDtoInput.getMembershipLevel() != null){
+            validateArgument(memberDtoInput.getMembershipLevel(),"Membership level id not found in repository",
                     id->!membershipLevelRepository.existsById(id),InvalidInputException::new);
         }
         return memberDtoInput;

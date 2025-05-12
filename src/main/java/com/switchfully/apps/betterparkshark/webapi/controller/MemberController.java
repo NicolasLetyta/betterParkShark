@@ -49,8 +49,6 @@ public class MemberController {
                                                  @RequestHeader(value = "Authorization") String authToken ) {
         //AUTHORIZE AS MEMBER
         //Member member = !(authorize user as member from authorizationservice)!
-        System.out.println(body);
-
         Long membershipLevelId = body.get("membershipLevel");
         System.out.println(membershipLevelId);
         return memberService.updateMemberShipLevel(userId, membershipLevelId);
