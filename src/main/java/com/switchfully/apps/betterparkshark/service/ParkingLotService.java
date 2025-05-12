@@ -13,20 +13,23 @@ import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutputList;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.switchfully.apps.betterparkshark.utility.Validation.validateArgument;
+import static com.switchfully.apps.betterparkshark.utility.Validation.validateNonBlank;
 
 @Service
 public class ParkingLotService {
 
-    private ParkingLotRepository parkingLotRepository;
-    private ParkingLotMapper parkingLotMapper;
-    private EmployeeRepository employeeRepository;
-    private AddressRepository addressRepository;
-    private AddressMapper addressMapper;
-    private DivisionRepository divisionRepository;
+    private final ParkingLotRepository parkingLotRepository;
+    private final ParkingLotMapper parkingLotMapper;
+    private final EmployeeRepository employeeRepository;
+    private final AddressRepository addressRepository;
+    private final AddressMapper addressMapper;
+    private final DivisionRepository divisionRepository;
 
     public ParkingLotService(ParkingLotRepository parkingLotRepository, ParkingLotMapper parkingLotMapper, EmployeeRepository employeeRepository, AddressRepository addressRepository, AddressMapper addressMapper, DivisionRepository divisionRepository) {
         this.parkingLotRepository = parkingLotRepository;
@@ -40,13 +43,29 @@ public class ParkingLotService {
     public ParkingLotDtoOutputList createNewParkingLot(ParkingLotDtoInput parkingLotDtoInput) {
         // save address to get an idea for it
         Address address = addressRepository.save(addressMapper.inputToAddress(parkingLotDtoInput.getAddress()));
+        // check input
+        // check name
+        validateNonBlank(parkingLotDtoInput.getName(), "Name cannot be null or blank", InvalidInputException::new);
+        if (parkingLotRepository.existsByName(parkingLotDtoInput.getName())) {
+            throw new InvalidInputException("A parking lot with that name already exists");
+        }
+        // check category
+        if (Arrays.stream(LotCategory.values()).noneMatch(cat ->cat.name().equalsIgnoreCase(parkingLotDtoInput.getCategory()))){
+            throw new InvalidInputException("Invalid category");
+        }
+        parkingLotDtoInput.setCategory(parkingLotDtoInput.getCategory().toUpperCase());
+        //check division exist
+        Division division = checkExistingDivision(parkingLotDtoInput.getDivisionId());
+        // check contact person
+        Employee contactPerson = checkEmployeeIsContactPerson(parkingLotDtoInput.getContactPersonId());
+        // check if no negative number
+        checkIfPositveOr0Int(parkingLotDtoInput.getMaxCapacity());
+        checkIfPositveOr0Double(parkingLotDtoInput.getPriceHour());
+
         //create and save new parkinglot
         ParkingLot newParkingLot = parkingLotMapper.inputToParkingLot(parkingLotDtoInput, address.getId());
         parkingLotRepository.save(newParkingLot);
-        //retrieve info for full output
-        Employee contactPerson = employeeRepository.findEmployeeById(newParkingLot.getContactPersonId());
-        validateArgument(newParkingLot.getDivisionId(),"Division not found in repository", i->!divisionRepository.existsById(i), InvalidInputException::new);
-        Division division = divisionRepository.findById(newParkingLot.getDivisionId()).get();
+
         return parkingLotMapper.parkingLotToOutputList(newParkingLot, contactPerson, address, division);
     }
 
@@ -66,13 +85,43 @@ public class ParkingLotService {
     public ParkingLotDtoOutputList findParkingLotById(long id) {
         validateArgument(id,"Parking lot not found in repository", i->!parkingLotRepository.existsById(i),InvalidInputException::new);
         ParkingLot parkingLot = parkingLotRepository.findById(id).get();
-        System.out.println(parkingLot);
-        Employee contactPerson = employeeRepository.findEmployeeById(parkingLot.getContactPersonId());
+
+        Employee contactPerson = checkExistingEmployee(parkingLot.getContactPersonId());
+
         validateArgument(parkingLot.getAddressId(),"Address not found in repository", i->!addressRepository.existsById(i),InvalidInputException::new);
         Address address = addressRepository.findById(parkingLot.getAddressId()).get();
-        validateArgument(parkingLot.getDivisionId(),"Division not found in repository", i->!divisionRepository.existsById(i),InvalidInputException::new);
-        Division division = divisionRepository.findById(parkingLot.getDivisionId()).get();
+        Division division = checkExistingDivision(parkingLot.getDivisionId());
         return parkingLotMapper.parkingLotToOutputList(parkingLot, contactPerson, address, division);
 
+    }
+
+    public Division checkExistingDivision(Long id) {
+        validateArgument(id,"Division not found in repository", i->!divisionRepository.existsById(i),InvalidInputException::new);
+        return divisionRepository.findById(id).get();
+    }
+
+    public Employee checkExistingEmployee(Long id) {
+        validateArgument(id, "Employee not found in repository", i->!employeeRepository.existsById(i),InvalidInputException::new);
+        return employeeRepository.findById(id).get();
+    }
+
+    public Employee checkEmployeeIsContactPerson(Long id) {
+        Employee employee = checkExistingEmployee(id);
+        if (!Objects.equals(String.valueOf(employee.getTypeEmployee()), "CONTACT_PERSON")){
+            throw new InvalidInputException("Employee is not a CONTACT_PERSON");
+        }
+        return employee;
+    }
+
+    public void checkIfPositveOr0Int (int capacity){
+        if (capacity < 0){
+            throw new InvalidInputException("Capacity cannot be negative");
+        }
+    }
+
+    public void checkIfPositveOr0Double (double price){
+        if (price < 0){
+            throw new InvalidInputException("Price cannot be negative");
+        }
     }
 }
