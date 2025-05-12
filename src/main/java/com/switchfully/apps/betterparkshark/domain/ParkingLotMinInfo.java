@@ -2,9 +2,9 @@ package com.switchfully.apps.betterparkshark.domain;
 
 public interface ParkingLotMinInfo {
 
-    long getId();
+    Long getId();
     String getName();
     int getMaxCapacity();
-    long getContactPersonId();
+    Long getContactPersonId();
 
 }

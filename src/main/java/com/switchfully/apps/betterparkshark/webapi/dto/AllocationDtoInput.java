@@ -2,21 +2,21 @@ package com.switchfully.apps.betterparkshark.webapi.dto;
 
 public class AllocationDtoInput {
 
-    private long memberId;
+    private Long memberId;
     private String licensePlate;
-    private long parkingId;
+    private Long parkingId;
 
     public AllocationDtoInput() {
 
     }
 
-    public AllocationDtoInput(long memberId, String licensePlate, long parkingId) {
+    public AllocationDtoInput(Long memberId, String licensePlate, Long parkingId) {
         this.memberId = memberId;
         this.licensePlate = licensePlate;
         this.parkingId = parkingId;
     }
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
@@ -24,7 +24,7 @@ public class AllocationDtoInput {
         return licensePlate;
     }
 
-    public long getParkingId() {
+    public Long getParkingId() {
         return parkingId;
     }
 }

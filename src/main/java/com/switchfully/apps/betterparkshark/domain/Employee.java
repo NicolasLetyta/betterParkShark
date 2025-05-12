@@ -1,16 +1,13 @@
 package com.switchfully.apps.betterparkshark.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
 
     @Id
-    private long id;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -19,10 +16,10 @@ public class Employee {
     private String lastName;
 
     @Column(name = "mobile_phone")
-    private Long mobilePhone;
+    private String mobilePhone;
 
     @Column(name = "telephone")
-    private Long telephone;
+    private String telephone;
 
     @Column
     private String email;
@@ -31,15 +28,16 @@ public class Employee {
     private String password;
 
     @Column(name = "type_employee")
+    @Enumerated(EnumType.STRING)
     private EmployeeCategory typeEmployee;
 
     @Column(name = "address_id")
-    private long addressId;
+    private Long addressId;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, Long mobilePhone, Long telephone, String email, String password, EmployeeCategory typeEmployee, long addressId) {
+    public Employee(String firstName, String lastName, String mobilePhone, String telephone, String email, String password, EmployeeCategory typeEmployee, Long addressId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobilePhone = mobilePhone;
@@ -50,7 +48,7 @@ public class Employee {
         this.addressId = addressId;
     }
 
-    public Employee(long id, String firstName, String lastName, Long mobilePhone, String email, String password, EmployeeCategory typeEmployee, long addressId) {
+    public Employee(Long id, String firstName, String lastName, String mobilePhone, String email, String password, EmployeeCategory typeEmployee, Long addressId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,11 +67,11 @@ public class Employee {
         return lastName;
     }
 
-    public Long getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public Long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -89,7 +87,7 @@ public class Employee {
         return typeEmployee;
     }
 
-    public long getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 }

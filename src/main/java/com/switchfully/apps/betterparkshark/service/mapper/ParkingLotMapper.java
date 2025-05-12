@@ -4,12 +4,18 @@ import com.switchfully.apps.betterparkshark.domain.*;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoOutputList;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ParkingLotMapper {
 
     private AddressMapper addressMapper;
 
-    public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, long addressId) {
+    public ParkingLotMapper(AddressMapper addressMapper) {
+        this.addressMapper = addressMapper;
+    }
+
+    public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, Long addressId) {
         return new ParkingLot(
                 parkingLotDtoInput.getName(),
                 parkingLotDtoInput.getCategory(),
@@ -38,6 +44,7 @@ public class ParkingLotMapper {
                 parkingLot.getName(),
                 parkingLot.getLotCategory(),
                 parkingLot.getMaxCapacity(),
+                parkingLot.getSpaceAvailable(),
                 parkingLot.getPriceHour(),
                 addressMapper.addressToOutput(address),
                 contactPerson.getFirstName(),

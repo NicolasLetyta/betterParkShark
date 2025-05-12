@@ -15,7 +15,6 @@ import java.util.function.Function;
 
 import static com.switchfully.apps.betterparkshark.utility.Validation.validateArgument;
 
-
 @Service
 public class AuthenticationService {
 

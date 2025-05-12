@@ -17,7 +17,7 @@ import java.util.List;
 public class ParkingLotController {
     private static final Logger logger = LoggerFactory.getLogger(ParkingLotController.class);
 
-    private ParkingLotService parkingLotService;
+    private final ParkingLotService parkingLotService;
 
     @Autowired
     public ParkingLotController(ParkingLotService parkingLotService) {

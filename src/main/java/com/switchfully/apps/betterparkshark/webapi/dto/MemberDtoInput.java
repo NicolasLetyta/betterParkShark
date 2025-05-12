@@ -8,10 +8,11 @@ public class MemberDtoInput {
     private String password;
     private String licensePlate;
     private AddressDtoInput addressDtoInput;
-    private Integer memberShipLevel;
+
+    private Long memberShipLevel;
 
     public MemberDtoInput(String firstName, String lastName, String phone, String email, String password,
-                          String licensePlate, AddressDtoInput addressDtoInput, Integer memberShipLevel) {
+                          String licensePlate, AddressDtoInput addressDtoInput, Long memberShipLevel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -50,7 +51,7 @@ public class MemberDtoInput {
         return addressDtoInput;
     }
 
-    public Integer getMemberShipLevel() {
+    public Long getMemberShipLevel() {
         return memberShipLevel;
     }
 }
