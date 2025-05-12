@@ -1,6 +1,7 @@
 package com.switchfully.apps.betterparkshark.service;
 
 import com.switchfully.apps.betterparkshark.domain.*;
+import com.switchfully.apps.betterparkshark.exception.InvalidInputException;
 import com.switchfully.apps.betterparkshark.repository.AddressRepository;
 import com.switchfully.apps.betterparkshark.repository.DivisionRepository;
 import com.switchfully.apps.betterparkshark.repository.EmployeeRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.switchfully.apps.betterparkshark.utility.Validation.validateArgument;
 
 @Service
 public class ParkingLotService {
@@ -42,7 +45,8 @@ public class ParkingLotService {
         parkingLotRepository.save(newParkingLot);
         //retrieve info for full output
         Employee contactPerson = employeeRepository.findEmployeeById(newParkingLot.getContactPersonId());
-        Division division = divisionRepository.findById(newParkingLot.getDivisionId());
+        validateArgument(newParkingLot.getDivisionId(),"Division not found in repository", i->!divisionRepository.existsById(i), InvalidInputException::new);
+        Division division = divisionRepository.findById(newParkingLot.getDivisionId()).get();
         return parkingLotMapper.parkingLotToOutputList(newParkingLot, contactPerson, address, division);
     }
 
@@ -60,10 +64,13 @@ public class ParkingLotService {
     }
 
     public ParkingLotDtoOutputList findParkingLotById(long id) {
-        ParkingLot parkingLot = parkingLotRepository.findParkingLotById(id);
+        validateArgument(id,"Parking lot not found in repository", i->!parkingLotRepository.existsById(i),InvalidInputException::new);
+        ParkingLot parkingLot = parkingLotRepository.findById(id).get();
         Employee contactPerson = employeeRepository.findEmployeeById(parkingLot.getContactPersonId());
-        Address address = addressRepository.findById(parkingLot.getAddressId());
-        Division division = divisionRepository.findById(parkingLot.getDivisionId());
+        validateArgument(parkingLot.getAddressId(),"Address not found in repository", i->!addressRepository.existsById(i),InvalidInputException::new);
+        Address address = addressRepository.findById(parkingLot.getAddressId()).get();
+        validateArgument(parkingLot.getDivisionId(),"Division not found in repository", i->!divisionRepository.existsById(i),InvalidInputException::new);
+        Division division = divisionRepository.findById(parkingLot.getDivisionId()).get();
         return parkingLotMapper.parkingLotToOutputList(parkingLot, contactPerson, address, division);
 
     }

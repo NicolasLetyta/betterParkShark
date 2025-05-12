@@ -4,7 +4,7 @@ import com.switchfully.apps.betterparkshark.domain.LotCategory;
 
 public class ParkingLotDtoOutputList {
 
-    private long id;
+    private Long id;
     private String name;
     private LotCategory category;
     private int maxCapacity;
@@ -16,13 +16,13 @@ public class ParkingLotDtoOutputList {
     private String employeePhone;
     private String employeeMobile;
     private String employeeEmail;
-    private long divisionId;
+    private Long divisionId;
     private String divisionName;
 
     public ParkingLotDtoOutputList() {
     }
 
-    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, int spaceAvailable,double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeEmail,long divisionId,  String divisionName) {
+    public ParkingLotDtoOutputList(Long id, String name, LotCategory category, int maxCapacity, int spaceAvailable,double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeEmail,Long divisionId,  String divisionName) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -38,7 +38,7 @@ public class ParkingLotDtoOutputList {
         this.divisionName = divisionName;
     }
 
-    public ParkingLotDtoOutputList(long id, String name, LotCategory category, int maxCapacity, int spaceAvailable, double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeMobile, String employeeEmail,long divisionId, String divisionName) {
+    public ParkingLotDtoOutputList(Long id, String name, LotCategory category, int maxCapacity, int spaceAvailable, double priceHour, AddressDtoOutput addressParkingLot, String employeeFirstName, String employeeLastName, String employeePhone, String employeeMobile, String employeeEmail,Long divisionId, String divisionName) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -55,7 +55,7 @@ public class ParkingLotDtoOutputList {
         this.divisionName = divisionName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -103,7 +103,7 @@ public class ParkingLotDtoOutputList {
         return employeeEmail;
     }
 
-    public long getDivisionId() {
+    public Long getDivisionId() {
         return divisionId;
     }
 

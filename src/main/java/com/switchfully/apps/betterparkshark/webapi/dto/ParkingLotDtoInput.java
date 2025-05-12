@@ -9,13 +9,13 @@ public class ParkingLotDtoInput {
     private int maxCapacity;
     private double priceHour;
     private AddressDtoInput address;
-    private long contactPersonId;
-    private long divisionId;
+    private Long contactPersonId;
+    private Long divisionId;
 
     public ParkingLotDtoInput() {
     }
 
-    public ParkingLotDtoInput(String name, LotCategory category, int maxCapacity, double priceHour, AddressDtoInput address, long contactPersonId, long divisionId) {
+    public ParkingLotDtoInput(String name, LotCategory category, int maxCapacity, double priceHour, AddressDtoInput address, Long contactPersonId, Long divisionId) {
         this.name = name;
         this.category = category;
         this.maxCapacity = maxCapacity;
@@ -45,11 +45,11 @@ public class ParkingLotDtoInput {
         return address;
     }
 
-    public long getContactPersonId() {
+    public Long getContactPersonId() {
         return contactPersonId;
     }
 
-    public long getDivisionId() {
+    public Long getDivisionId() {
         return divisionId;
     }
 }

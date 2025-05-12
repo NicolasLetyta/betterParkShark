@@ -10,6 +10,7 @@ import com.switchfully.apps.betterparkshark.repository.ParkingLotRepository;
 import com.switchfully.apps.betterparkshark.service.mapper.AllocationMapper;
 import com.switchfully.apps.betterparkshark.webapi.dto.AllocationDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.AllocationDtoOutput;
+import com.switchfully.apps.betterparkshark.exception.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -37,24 +38,19 @@ public class AllocationService {
     }
 
     public AllocationDtoOutput createNewAllocation(AllocationDtoInput allocationDtoInput, Member member) {
-        // check id member, check license plate (different if gold member), parkingid in db,
-        // parking lot still places, return allocation id,
-
         // check if member asking is same as one connected:
         if (allocationDtoInput.getMemberId() != member.getId()) {
             throw new IllegalArgumentException("Member id mismatch, member id for allocation should be the same as the one connected");
         }
         // check license plate (if different from the one from member, need to be gold member
-        validateArgument(member.getMembershipLevel(),"Member not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel());
+        validateArgument(member.getMembershipLevel(),"Membership not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
         if (!Objects.equals(membershipLevel.getName(), "gold") && !Objects.equals(member.getLicensePlate(), allocationDtoInput.getLicensePlate())) {
             throw new IllegalArgumentException("Not a gold member, license plate must be the same as the member license plate");
         }
         // check if parking exist
-        ParkingLot parkingLot = parkingLotRepository.findParkingLotById(allocationDtoInput.getParkingId());
-        if (parkingLot == null) {
-            throw new IllegalArgumentException("No parking lot with this id exists");
-        }
+        ParkingLot parkingLot = checkExistingParkingLot(allocationDtoInput.getParkingId());
+
         // check if enough place in parking lot
         if(parkingLot.getSpaceAvailable() == 0){
             throw new IllegalArgumentException("No space available in parking lot with this id");
@@ -72,13 +68,11 @@ public class AllocationService {
 
     public AllocationDtoOutput stopAllocation(long id, Member member) {
         // check id member same as in allocation, check if active, end time set to now
-        if(allocationRepository.findById(id) == null) {
-            throw new IllegalArgumentException("No allocation with this id exists");
-        }
-        Allocation allocation = allocationRepository.findById(id);
+        validateArgument(id,"Allocation not found in repository", i->!allocationRepository.existsById(i),InvalidInputException::new);
+        Allocation allocation = allocationRepository.findById(id).get();
 
         if(allocation.getMemberId() != member.getId()) {
-            throw new IllegalArgumentException("You can not stop this allocation if you are not the member");
+            throw new IllegalArgumentException("You can not stop this allocation if you are not the owner");
         }
 
         if(allocation.getEndTime() != null) {
@@ -87,7 +81,7 @@ public class AllocationService {
         // set end time as now
         allocation.setEndTime(Timestamp.valueOf(LocalDateTime.now().withNano(0)));
         // update database, both with end time and add new available spot in parking lot
-        ParkingLot parkingLot = parkingLotRepository.findParkingLotById(allocation.getParkingId());
+        ParkingLot parkingLot = checkExistingParkingLot(allocation.getParkingId());
         parkingLot.setSpaceAvailable(parkingLot.getSpaceAvailable() + 1);
         parkingLotRepository.save(parkingLot);
         allocation = allocationRepository.save(allocation);
@@ -141,6 +135,11 @@ public class AllocationService {
         return allocations.stream()
                 .map(allocationMapper::allocationToOutput)
                 .toList();
+    }
+
+    public ParkingLot checkExistingParkingLot(Long id) {
+        validateArgument(id,"Parking lot not found in repository", i->!parkingLotRepository.existsById(i),InvalidInputException::new);
+        return parkingLotRepository.findById(id).get();
     }
 
 }

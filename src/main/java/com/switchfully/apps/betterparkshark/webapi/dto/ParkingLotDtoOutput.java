@@ -3,7 +3,7 @@ package com.switchfully.apps.betterparkshark.webapi.dto;
 
 public class ParkingLotDtoOutput {
 
-    private long id;
+    private Long id;
     private String name;
     private int maxCapacity;
     private String employeePhone;
@@ -13,7 +13,7 @@ public class ParkingLotDtoOutput {
     public ParkingLotDtoOutput() {
     }
 
-    public ParkingLotDtoOutput(long id, String name, int maxCapacity, String employeePhone, String employeeMobile, String employeeEmail) {
+    public ParkingLotDtoOutput(Long id, String name, int maxCapacity, String employeePhone, String employeeMobile, String employeeEmail) {
         this.id = id;
         this.name = name;
         this.maxCapacity = maxCapacity;
@@ -22,7 +22,7 @@ public class ParkingLotDtoOutput {
         this.employeeEmail = employeeEmail;
     }
 
-    public ParkingLotDtoOutput(long id, String name, int maxCapacity, String employeePhone, String employeeEmail) {
+    public ParkingLotDtoOutput(Long id, String name, int maxCapacity, String employeePhone, String employeeEmail) {
         this.id = id;
         this.name = name;
         this.maxCapacity = maxCapacity;
@@ -30,7 +30,7 @@ public class ParkingLotDtoOutput {
         this.employeeEmail = employeeEmail;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
