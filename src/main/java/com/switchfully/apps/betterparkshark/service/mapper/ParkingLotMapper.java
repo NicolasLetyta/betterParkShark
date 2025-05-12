@@ -15,7 +15,7 @@ public class ParkingLotMapper {
         this.addressMapper = addressMapper;
     }
 
-    public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, long addressId) {
+    public ParkingLot inputToParkingLot(ParkingLotDtoInput parkingLotDtoInput, Long addressId) {
         return new ParkingLot(
                 parkingLotDtoInput.getName(),
                 parkingLotDtoInput.getCategory(),

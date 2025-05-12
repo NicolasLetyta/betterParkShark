@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Employee {
 
     @Id
-    private long id;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -32,12 +32,12 @@ public class Employee {
     private EmployeeCategory typeEmployee;
 
     @Column(name = "address_id")
-    private long addressId;
+    private Long addressId;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String mobilePhone, String telephone, String email, String password, EmployeeCategory typeEmployee, long addressId) {
+    public Employee(String firstName, String lastName, String mobilePhone, String telephone, String email, String password, EmployeeCategory typeEmployee, Long addressId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobilePhone = mobilePhone;
@@ -48,7 +48,7 @@ public class Employee {
         this.addressId = addressId;
     }
 
-    public Employee(long id, String firstName, String lastName, String mobilePhone, String email, String password, EmployeeCategory typeEmployee, long addressId) {
+    public Employee(Long id, String firstName, String lastName, String mobilePhone, String email, String password, EmployeeCategory typeEmployee, Long addressId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -87,7 +87,7 @@ public class Employee {
         return typeEmployee;
     }
 
-    public long getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 }

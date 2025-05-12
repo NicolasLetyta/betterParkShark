@@ -8,7 +8,7 @@ public class ParkingLot {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_lot_seq")
     @SequenceGenerator(sequenceName = "parking_lot_seq", name = "parking_lot_seq",allocationSize=1)
     @Id
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -26,18 +26,18 @@ public class ParkingLot {
     private double priceHour;
 
     @Column(name = "contact_person",nullable = false)
-    private long contactPersonId;
+    private Long contactPersonId;
 
     @Column(name = "address_id",nullable = false)
-    private long addressId;
+    private Long addressId;
 
     @Column(name = "division_id",nullable = false)
-    private long divisionId;
+    private Long divisionId;
 
     public ParkingLot() {
     }
 
-    public ParkingLot(String name, LotCategory lotCategory, int maxCapacity, double priceHour, long contactPersonId, long addressId, long divisionId) {
+    public ParkingLot(String name, LotCategory lotCategory, int maxCapacity, double priceHour, Long contactPersonId, Long addressId, Long divisionId) {
         this.name = name;
         this.lotCategory = lotCategory;
         this.maxCapacity = maxCapacity;
@@ -48,7 +48,7 @@ public class ParkingLot {
         this.divisionId = divisionId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -68,15 +68,15 @@ public class ParkingLot {
         return priceHour;
     }
 
-    public long getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 
-    public long getContactPersonId() {
+    public Long getContactPersonId() {
         return contactPersonId;
     }
 
-    public long getDivisionId() {
+    public Long getDivisionId() {
         return divisionId;
     }
 

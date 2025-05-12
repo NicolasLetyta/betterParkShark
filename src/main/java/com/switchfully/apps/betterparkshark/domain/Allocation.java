@@ -11,16 +11,16 @@ public class Allocation {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "allocation_seq")
     @SequenceGenerator(sequenceName = "allocation_seq", name = "allocation_seq",allocationSize=1)
     @Id
-    private long id;
+    private Long id;
 
     @Column(name = "member_id",nullable = false)
-    private long memberId;
+    private Long memberId;
 
     @Column(name = "license_plate",nullable = false)
     private String licensePlate;
 
     @Column(name = "parking_id",nullable = false)
-    private long parkingId;
+    private Long parkingId;
 
     @Column(name = "start_time",nullable = false)
     private Timestamp startTime;
@@ -31,18 +31,18 @@ public class Allocation {
     public Allocation() {
     }
 
-    public Allocation(long memberId, String licensePlate, long parkingId) {
+    public Allocation(Long memberId, String licensePlate, Long parkingId) {
         this.memberId = memberId;
         this.licensePlate = licensePlate;
         this.parkingId = parkingId;
         this.startTime = Timestamp.valueOf(LocalDateTime.now().withNano(0));
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
@@ -50,7 +50,7 @@ public class Allocation {
         return licensePlate;
     }
 
-    public long getParkingId() {
+    public Long getParkingId() {
         return parkingId;
     }
 

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MembershipLevelRepository extends JpaRepository<MembershipLevel, Long> {
-    MembershipLevel findById(long id);
+
 }
