@@ -1,6 +1,6 @@
 package com.switchfully.apps.betterparkshark.webapi.controller;
 
-import com.switchfully.apps.betterparkshark.service.AuthenticationService;
+//import com.switchfully.apps.betterparkshark.service.AuthenticationService;
 import com.switchfully.apps.betterparkshark.service.MemberService;
 import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoOutput;
@@ -14,10 +14,11 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final AuthenticationService authenticationService;
-    public MemberController(MemberService memberService, AuthenticationService authenticationService) {
+    //private final AuthenticationService authenticationService;
+    public MemberController(MemberService memberService) {
+        //public MemberController(MemberService memberService, AuthenticationService authenticationService) {
         this.memberService = memberService;
-        this.authenticationService = authenticationService;
+        //this.authenticationService = authenticationService;
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")

@@ -43,8 +43,8 @@ public class AllocationService {
             throw new IllegalArgumentException("Member id mismatch, member id for allocation should be the same as the one connected");
         }
         // check license plate (if different from the one from member, need to be gold member
-        validateArgument(member.getMembershipLevel(),"Membership not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
+        validateArgument(member.getMembershipLevelId(),"Membership not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
         if (!Objects.equals(membershipLevel.getName(), "gold") && !Objects.equals(member.getLicensePlate(), allocationDtoInput.getLicensePlate())) {
             throw new IllegalArgumentException("Not a gold member, license plate must be the same as the member license plate");
         }
