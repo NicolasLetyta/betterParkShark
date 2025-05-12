@@ -1,10 +1,9 @@
 package com.switchfully.apps.betterparkshark.domain;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.NonNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "member")
@@ -12,7 +11,8 @@ public class Member {
     @Id
     @SequenceGenerator(sequenceName = "member_seq", name = "member_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
-    private long id;
+
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -20,32 +20,34 @@ public class Member {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Transient
     private String name;
 
     @Column(name = "phone")
     @NonNull
     private String phone;
 
-    @Column(name = "email", nullable = false)
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "license_plate", nullable = false)
+    @Column(name = "license_plate", nullable = false, unique = true)
     private String licensePlate;
 
-    @Column(name = "registration_date", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime registrationDate;
+    @Column(name = "registration_date", columnDefinition = "DATE", nullable = false)
+    private LocalDate registrationDate;
 
-    @JoinColumn(name ="address_id")
-    private long address;
+    @Column(name ="address_id")
+    private Long addressId;
 
-    @JoinColumn(name ="membership_level_id",nullable = false)
-    private long membershipLevel;
+    @Column(name ="membership_level_id",nullable = false)
+    private long membershipLevelId;
 
     public Member() {}
-    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDateTime registrationDate, long address, long membershipLevel) {
+    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDate registrationDate, Long addressId, Long membershipLevelId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -54,15 +56,15 @@ public class Member {
         this.password = password;
         this.licensePlate = licensePlate;
         this.registrationDate = registrationDate;
-        this.address = address;
-        this.membershipLevel = membershipLevel;
+        this.addressId = addressId;
+        this.membershipLevelId = membershipLevelId;
     }
 
-    public void setMembershipLevel(long membershipLevelId) {
-        this.membershipLevel = membershipLevelId;
+    public void setMembershipLevelId(long membershipLevelId) {
+        this.membershipLevelId = membershipLevelId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -94,16 +96,16 @@ public class Member {
         return licensePlate;
     }
 
-    public LocalDateTime getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public long getAddress() {
-        return address;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public long getMembershipLevel() {
-        return membershipLevel;
+    public long getMembershipLevelId() {
+        return membershipLevelId;
     }
 
     @Override
@@ -116,6 +118,6 @@ public class Member {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return id == member.id;
+        return this.id == member.id;
     }
 }
