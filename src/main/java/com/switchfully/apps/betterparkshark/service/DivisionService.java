@@ -65,30 +65,30 @@ public class DivisionService {
     // Validation
     void checkDivisionNameValidity(String name, String originalName) {
         if (name == null || name.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Division name cannot be blank");
+            throw new InvalidInputException("Division name cannot be blank");
         }
         if (originalName == null || originalName.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Division original name cannot be blank");
+            throw new InvalidInputException("Division original name cannot be blank");
         }
         if (divisionRepository.existsByName(name)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Division name already in use");
+            throw new InvalidInputException("Division name already in use");
         }
     }
 
     void checkDivisionDirectorValidity(Long directorId) {
         if (directorId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Division director ID cannot be null");
+            throw new InvalidInputException("Division director ID cannot be null");
         }
         Employee director = employeeRepository.findById(directorId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Division director not found"));
         if (!director.getTypeEmployee().equals(EmployeeCategory.DIRECTOR)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Division director must be a director");
+            throw new InvalidInputException("Division director must be a director");
         }
     }
 
     void checkSubDivisionParentValidity(Long parentId) {
         if (parentId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sub-division parent ID cannot be null");
+            throw new InvalidInputException("Sub-division parent ID cannot be null");
         }
         divisionRepository.findById(parentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sub-division parent not found"));
