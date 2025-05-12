@@ -7,7 +7,6 @@ public class DivisionDtoOutput {
     private String name;
     private String originalName;
     private Long directorId;
-    private Long parentId;
 
     // CONSTRUCTORS
     public DivisionDtoOutput(Long id, String name, String originalName, Long directorId, Long parentId) {
@@ -15,7 +14,6 @@ public class DivisionDtoOutput {
         this.name = name;
         this.originalName = originalName;
         this.directorId = directorId;
-        this.parentId = parentId;
     }
 
     // GETTERS
@@ -30,8 +28,5 @@ public class DivisionDtoOutput {
     }
     public Long getDirectorId() {
         return directorId;
-    }
-    public Long getParentId() {
-        return parentId;
     }
 }

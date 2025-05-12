@@ -8,6 +8,7 @@ public class MemberDtoInput {
     private String password;
     private String licensePlate;
     private AddressDtoInput addressDtoInput;
+
     private Long memberShipLevel;
 
     public MemberDtoInput(String firstName, String lastName, String phone, String email, String password,

@@ -58,9 +58,7 @@ public class AddressRepositoryTest {
     //checking if find by id works after saving a new address
     void givenAddressExistsInDatabase_whenFindById_thenReturnAddressFromDatabase() {
         Address savedAddress = addressRepository.save(address);
-
         Address result = addressRepository.findById(savedAddress.getId()).get();
-
         assertThat(result).isEqualTo(savedAddress);
     }
 }
