@@ -15,4 +15,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT m.id as id, m.firstName as firstName, m.lastName as lastName, m.licensePlate as licensePlate, m.phone as phone, m.email as email, m.registrationDate as registrationDate FROM Member m")
     List<MemberProjection> findAllMembersProjected();
+
+    Member findByEmail(String email);
 }

@@ -1,7 +1,6 @@
 package com.switchfully.apps.betterparkshark.webapi.controller;
 
 import com.switchfully.apps.betterparkshark.service.DivisionService;
-import com.switchfully.apps.betterparkshark.service.mapper.DivisionMapper;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.SubDivisionDtoInput;
