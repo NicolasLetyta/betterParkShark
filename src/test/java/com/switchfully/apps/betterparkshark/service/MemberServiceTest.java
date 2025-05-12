@@ -173,6 +173,9 @@ public class MemberServiceTest {
         List<MemberDtoOutputLight> result = memberService.findAllMembers();
 
         assertThat(result).hasSize(5);
+
+        System.out.println(result);
+
         assertThat(result.get(0).getEmail()).isEqualTo(member1.getEmail());
         assertThat(result.get(1).getEmail()).isEqualTo(member2.getEmail());
         assertThat(result.get(2).getEmail()).isEqualTo(member3.getEmail());

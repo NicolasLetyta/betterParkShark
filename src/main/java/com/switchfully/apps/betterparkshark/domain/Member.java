@@ -1,11 +1,9 @@
 package com.switchfully.apps.betterparkshark.domain;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -13,7 +11,7 @@ public class Member {
     @Id
     @SequenceGenerator(sequenceName = "member_seq", name = "member_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
-    private long id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -21,6 +19,7 @@ public class Member {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Transient
     private String name;
 
     @Column(name = "phone")
@@ -39,14 +38,14 @@ public class Member {
     @Column(name = "registration_date", columnDefinition = "DATE", nullable = false)
     private LocalDate registrationDate;
 
-    @JoinColumn(name ="address_id")
-    private Long address;
+    @Column(name ="address_id")
+    private Long addressId;
 
-    @JoinColumn(name ="membership_level_id",nullable = false)
-    private long membershipLevel;
+    @Column(name ="membership_level_id",nullable = false)
+    private long membershipLevelId;
 
     public Member() {}
-    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDate registrationDate, Long address, Long membershipLevel) {
+    public Member(String firstName, String lastName, String phone, String email, String password, String licensePlate, LocalDate registrationDate, Long addressId, Long membershipLevelId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -55,15 +54,15 @@ public class Member {
         this.password = password;
         this.licensePlate = licensePlate;
         this.registrationDate = registrationDate;
-        this.address = address;
-        this.membershipLevel = membershipLevel;
+        this.addressId = addressId;
+        this.membershipLevelId = membershipLevelId;
     }
 
-    public void setMembershipLevel(Long membershipLevelId) {
-        this.membershipLevel = membershipLevelId;
+    public void setMembershipLevelId(long membershipLevelId) {
+        this.membershipLevelId = membershipLevelId;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -99,12 +98,12 @@ public class Member {
         return registrationDate;
     }
 
-    public Long getAddress() {
-        return address;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public long getMembershipLevel() {
-        return membershipLevel;
+    public long getMembershipLevelId() {
+        return membershipLevelId;
     }
 
     @Override

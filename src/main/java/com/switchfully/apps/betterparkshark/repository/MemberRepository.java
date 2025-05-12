@@ -10,13 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-
-    Optional<Member> findById(long id);
-
     boolean existsByEmail(String email);
-    boolean existsById(Long id);
     boolean existsByLicensePlate(String licensePlate);
 
-    @Query("SELECT m.id as id, m.name as name, m.licensePlate as licensePlate, m.phone as phone, m.email as email, m.registrationDate as registrationDate FROM Member m")
+    @Query("SELECT m.id as id, m.firstName as firstName, m.lastName as lastName, m.licensePlate as licensePlate, m.phone as phone, m.email as email, m.registrationDate as registrationDate FROM Member m")
     List<MemberProjection> findAllMembersProjected();
 }

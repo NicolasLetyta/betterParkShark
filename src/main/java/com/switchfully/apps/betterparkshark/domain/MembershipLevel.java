@@ -8,7 +8,7 @@ public class MembershipLevel {
     @Id
     @SequenceGenerator(sequenceName = "membership_level_seq", name = "membership_level_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "membership_level_seq")
-    private long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -30,7 +30,7 @@ public class MembershipLevel {
         this.maxHour = maxHour;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

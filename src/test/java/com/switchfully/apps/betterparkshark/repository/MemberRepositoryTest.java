@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,7 +52,7 @@ public class MemberRepositoryTest {
         Member result = memberRepository.save(member);
 
         assertThat(result).isEqualTo(member);
-        assertThat(result.getMembershipLevel()).isEqualTo(1);
+        assertThat(result.getMembershipLevelId()).isEqualTo(1);
     }
 
     @Test

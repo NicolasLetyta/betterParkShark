@@ -47,8 +47,8 @@ public class MemberMapperTest {
         assertThat(result.getPassword()).isEqualTo(expectedResult.getPassword());
         assertThat(result.getLicensePlate()).isEqualTo(expectedResult.getLicensePlate());
         assertThat(result.getRegistrationDate()).isEqualTo(expectedResult.getRegistrationDate());
-        assertThat(result.getAddress()).isEqualTo(expectedResult.getAddress());
-        assertThat(result.getMembershipLevel()).isEqualTo(expectedResult.getMembershipLevel());
+        assertThat(result.getAddressId()).isEqualTo(expectedResult.getAddressId());
+        assertThat(result.getMembershipLevelId()).isEqualTo(expectedResult.getMembershipLevelId());
 
     }
 
@@ -67,8 +67,8 @@ public class MemberMapperTest {
         assertThat(result.getPassword()).isEqualTo(expectedResult.getPassword());
         assertThat(result.getLicensePlate()).isEqualTo(expectedResult.getLicensePlate());
         assertThat(result.getRegistrationDate()).isEqualTo(expectedResult.getRegistrationDate());
-        assertThat(result.getAddress()).isEqualTo(expectedResult.getAddress());
-        assertThat(result.getMembershipLevel()).isEqualTo(expectedResult.getMembershipLevel());
+        assertThat(result.getAddressId()).isEqualTo(expectedResult.getAddressId());
+        assertThat(result.getMembershipLevelId()).isEqualTo(expectedResult.getMembershipLevelId());
     }
 
 

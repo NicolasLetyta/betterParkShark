@@ -10,10 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface MembershipLevelRepository extends JpaRepository<MembershipLevel, Long> {
-    Optional<MembershipLevel> findById(long id);
-
-    boolean existsById(long id);
-
     @Query("SELECT m.name as name FROM MembershipLevel m WHERE m.id =:id")
     String findNameById(@Param("id")long id);
 }

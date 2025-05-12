@@ -55,10 +55,13 @@ public class MemberService {
     public MemberDtoOutput findMemberById(Long id){
         validateArgument(id,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         Member member = memberRepository.findById(id).get();
-        Address address = addressRepository.findById(member.getAddress()).orElse(null);
+        System.out.println("Found member: " + member);
+        Address address = addressRepository.findById(member.getAddressId()).orElse(null);
+        System.out.println("Found address: " + address);
         //The way the data flows makes it impossible to retreieve a member from the databse whos MembershipLevelId is null
         //I can safely .get() from the optional without ever retrieving a null value
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(id).get();
+        System.out.println("Found membershipLevel: " + membershipLevel);
 
         return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
@@ -70,12 +73,13 @@ public class MemberService {
     public MemberDtoOutput updateMemberShipLevel(long memberId, long membershipLevelId) {
         validateArgument(memberId,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         validateArgument(membershipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
-        Member member = memberRepository.findById(memberId).get();
-        Address address = addressRepository.findById(member.getAddress()).orElse(null);
 
-        member.setMembershipLevel(membershipLevelId);
+        Member member = memberRepository.findById(memberId).get();
+        Address address = addressRepository.findById(member.getAddressId()).orElse(null);
+
+        member.setMembershipLevelId(membershipLevelId);
         memberRepository.save(member);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevel()).get();
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
         return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 
