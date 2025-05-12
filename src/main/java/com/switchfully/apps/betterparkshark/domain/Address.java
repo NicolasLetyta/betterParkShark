@@ -9,25 +9,21 @@ public class Address {
     @Id
     @SequenceGenerator(sequenceName = "address_seq", name = "address_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
-    private long id;
+    private Long id;
 
-    @Column(name = "street")
-    @NonNull
+    @Column(name = "street", nullable = false)
     private String street;
 
     @Column(name = "street_number")
     private String streetNumber;
 
-    @Column(name = "postal_code")
-    @NonNull
+    @Column(name = "postal_code",nullable = false)
     private String postalCode;
 
-    @Column(name = "city")
-    @NonNull
+    @Column(name = "city",nullable = false)
     private String city;
 
-    @Column(name = "country")
-    @NonNull
+    @Column(name = "country",nullable = false)
     private String country;
 
     public Address() {}
@@ -72,7 +68,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id == address.id;
+        return this.id == address.id;
     }
     @Override
     public String toString() {
