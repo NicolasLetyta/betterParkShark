@@ -206,6 +206,7 @@ public class MemberControllerTest {
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
+
         String authToken = basicAuth("janefonda@yahoo.com","janefonda");
         MemberDtoOutput expectedResult = memberService.findMemberById(memberGold.getId());
 

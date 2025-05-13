@@ -68,7 +68,6 @@ public class AuthenticationService {
 
         Employee employee = employeeRepository.findByEmail(email);
 
-
         validateArgument(employee, "User is not a manager", e->!e.getTypeEmployee().equals(EmployeeCategory.ADMIN));
         validateArgument(employee,"Invalid password", e->!e.getPassword().equals(password));
 
