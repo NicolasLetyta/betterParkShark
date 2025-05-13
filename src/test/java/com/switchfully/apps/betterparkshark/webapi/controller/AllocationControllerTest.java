@@ -4,7 +4,8 @@ import com.switchfully.apps.betterparkshark.domain.*;
 import com.switchfully.apps.betterparkshark.repository.*;
 import com.switchfully.apps.betterparkshark.webapi.dto.AllocationDtoInput;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
 public class AllocationControllerTest {
@@ -52,7 +54,7 @@ public class AllocationControllerTest {
     private MembershipLevel bronze;
 
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
@@ -121,9 +123,9 @@ public class AllocationControllerTest {
         .get("/allocations/member/" + memberId)
                 .then()
                 .statusCode(200)
-                .body("[0].allocationId", equalTo(1))
-                .body("[0].memberId", equalTo(1))
-                .body("[0].parkingId", equalTo(1))
+                .body("[0].allocationId", equalTo(savedAllocation.getId().intValue()))
+                .body("[0].memberId", equalTo(memberId.intValue()))
+                .body("[0].parkingId", equalTo(savedAllocation.getParkingId().intValue()))
                 .body("[0].licensePlate", equalTo("plate"));
     }
 
@@ -137,9 +139,9 @@ public class AllocationControllerTest {
                 .get("/allocations/parkinglot/" + parkingLotId)
                 .then()
                 .statusCode(200)
-                .body("[0].allocationId", equalTo(1))
-                .body("[0].memberId", equalTo(1))
-                .body("[0].parkingId", equalTo(1))
+                .body("[0].allocationId", equalTo(savedAllocation.getId().intValue()))
+                .body("[0].memberId", equalTo(savedAllocation.getMemberId().intValue()))
+                .body("[0].parkingId", equalTo(parkingLotId.intValue()))
                 .body("[0].licensePlate", equalTo("plate"));
     }
 
@@ -152,7 +154,7 @@ public class AllocationControllerTest {
         when()
                 .post("/allocations/" +allocationId)
                 .then()
-                .statusCode(201)
+                .statusCode(200)
                 .body("endTime", notNullValue());
     }
 

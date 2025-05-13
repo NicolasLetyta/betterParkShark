@@ -91,7 +91,7 @@ public class ParkingLotRepositoryTest {
 
         assertThat(parkingLots).isNotNull();
         assertThat(parkingLots.size()).isEqualTo(2);
-        //add check number of fields present? 
+        //add check number of fields present?
     }
 
 }
