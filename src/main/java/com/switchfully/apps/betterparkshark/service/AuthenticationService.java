@@ -16,7 +16,7 @@ import static com.switchfully.apps.betterparkshark.utility.Validation.validateAr
 
 @Service
 public class AuthenticationService {
-
+/*
     private final MemberRepository memberRepository;
     private final EmployeeRepository employeeRepository;
 
@@ -73,6 +73,8 @@ public class AuthenticationService {
 
         return employee;
     }
+
+ */
 }
 
 

@@ -78,17 +78,20 @@ public class DivisionService {
     void checkDivisionDirectorValidity(Long directorId) {
         if (directorId == null) {
             throw new InvalidInputException("Division director ID cannot be null");
+
         }
         Employee director = employeeRepository.findById(directorId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Division director not found"));
         if (!director.getTypeEmployee().equals(EmployeeCategory.DIRECTOR)) {
             throw new InvalidInputException("Division director must be a director");
+
         }
     }
 
     void checkSubDivisionParentValidity(Long parentId) {
         if (parentId == null) {
             throw new InvalidInputException("Sub-division parent ID cannot be null");
+
         }
         divisionRepository.findById(parentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sub-division parent not found"));
