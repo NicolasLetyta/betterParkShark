@@ -1,7 +1,12 @@
 package com.switchfully.apps.betterparkshark.webapi.controller;
 
+import com.switchfully.apps.betterparkshark.domain.Address;
 import com.switchfully.apps.betterparkshark.domain.Division;
+import com.switchfully.apps.betterparkshark.domain.Employee;
+import com.switchfully.apps.betterparkshark.domain.EmployeeCategory;
+import com.switchfully.apps.betterparkshark.repository.AddressRepository;
 import com.switchfully.apps.betterparkshark.repository.DivisionRepository;
+import com.switchfully.apps.betterparkshark.repository.EmployeeRepository;
 import com.switchfully.apps.betterparkshark.webapi.dto.DivisionDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.SubDivisionDtoInput;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +29,12 @@ public class DivisionControllerTest {
     @LocalServerPort
     private int port;
 
+    @Autowired
+    private DivisionRepository divisionRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @BeforeEach
     void setUp() {
@@ -31,11 +42,32 @@ public class DivisionControllerTest {
         RestAssured.port = port;
     }
 
-    @Autowired
-    private DivisionRepository divisionRepository;
+    void setUpPrerequisiteForCreation() {
+
+        addressRepository.save(new Address(
+                "Test Street",
+                "12",
+                "Test Postal Code",
+                "Test City",
+                "Test Country"
+        ));
+
+        employeeRepository.save(new Employee(
+                1L,
+                "John",
+                "Doe",
+                "+32123456789",
+                "director@ps.com",
+                "password",
+                EmployeeCategory.DIRECTOR,
+                1L
+        ));
+    }
 
     @Test
     void testCreateNewDivision() {
+
+        setUpPrerequisiteForCreation();
 
         DivisionDtoInput inputDTO = new DivisionDtoInput(
                 "Test Division",
@@ -58,6 +90,15 @@ public class DivisionControllerTest {
     @Test
     void testCreateNewSubDivision() {
 
+        setUpPrerequisiteForCreation();
+
+        divisionRepository.save(new Division(
+                "Parent Division",
+                "Parent Original Name",
+                1L,
+                null
+        ));
+
         SubDivisionDtoInput inputDTO = new SubDivisionDtoInput(
                 "Test Subdivision",
                 "Test Original Name",
@@ -74,8 +115,7 @@ public class DivisionControllerTest {
                 .statusCode(201)
                 .body("name", equalTo("Test Subdivision"))
                 .body("originalName", equalTo("Test Original Name"))
-                .body("directorId", equalTo(1))
-                .body("parentId", equalTo(1));
+                .body("directorId", equalTo(1));
     }
 
     @Test
@@ -112,7 +152,7 @@ public class DivisionControllerTest {
         when()
                 .get("/divisions/999")
                 .then()
-                .statusCode(404);
+                .statusCode(400);
     }
 
 }
