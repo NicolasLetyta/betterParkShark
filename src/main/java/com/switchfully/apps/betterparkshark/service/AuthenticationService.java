@@ -48,9 +48,11 @@ public class AuthenticationService {
         String email = decodedArray[0];
         String password = decodedArray[1];
 
+        validateArgument(email,"Provided email not found in member repo",
+                memberRepository::existsByEmail, InvalidHeaderException::new);
+
         Member member = memberRepository.findByEmail(email);
 
-        validateArgument(member,"User doesn't exist", Objects::isNull);
         validateArgument(member,"Invalid password", m->!m.getPassword().equals(password));
 
         return member;
@@ -61,10 +63,12 @@ public class AuthenticationService {
         String email = decodedArray[0];
         String password = decodedArray[1];
 
+        validateArgument(email,"Provided email not found in employee repo",
+                employeeRepository::existsByEmail, InvalidHeaderException::new);
+
         Employee employee = employeeRepository.findByEmail(email);
 
         validateArgument(employee, "User is not a manager", e->!e.getTypeEmployee().equals(EmployeeCategory.ADMIN));
-        validateArgument(employee,"User doesn't exist", Objects::isNull);
         validateArgument(employee,"Invalid password", e->!e.getPassword().equals(password));
 
         return employee;
