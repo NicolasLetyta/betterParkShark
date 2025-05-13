@@ -9,7 +9,6 @@ import com.switchfully.apps.betterparkshark.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
-import java.util.Objects;
 
 import static com.switchfully.apps.betterparkshark.utility.Validation.validateArgument;
 
