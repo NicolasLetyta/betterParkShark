@@ -52,7 +52,8 @@ public class AuthenticationService {
 
         Member member = memberRepository.findByEmail(email);
 
-        validateArgument(member,"Invalid password", m->!m.getPassword().equals(password));
+        validateArgument(member,"Invalid password", m->!m.getPassword().equals(password),
+                InvalidHeaderException::new);
 
         return member;
     }
@@ -67,8 +68,10 @@ public class AuthenticationService {
 
         Employee employee = employeeRepository.findByEmail(email);
 
-        validateArgument(employee, "User is not a manager", e->!e.getTypeEmployee().equals(EmployeeCategory.ADMIN));
-        validateArgument(employee,"Invalid password", e->!e.getPassword().equals(password));
+        validateArgument(employee, "User is not a manager", e->!e.getTypeEmployee().equals(EmployeeCategory.ADMIN),
+                InvalidHeaderException::new);
+        validateArgument(employee,"Invalid password", e->!e.getPassword().equals(password),
+                InvalidHeaderException::new);
 
         return employee;
         //this comment is here so we can commit this file, ignore
