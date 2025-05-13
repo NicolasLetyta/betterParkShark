@@ -6,6 +6,7 @@ import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.ParkingLotDtoInput;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,16 @@ public class ParkingLotControllerTest {
     private Division division;
     private MembershipLevel bronze;
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
+        memberRepository.deleteAll();
+        addressRepository.deleteAll();
+        divisionRepository.deleteAll();
+        employeeRepository.deleteAll();
+        membershipLevelRepository.deleteAll();
+        parkingLotRepository.deleteAll();
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
         bronze = new MembershipLevel("bronze",0,0,4);
