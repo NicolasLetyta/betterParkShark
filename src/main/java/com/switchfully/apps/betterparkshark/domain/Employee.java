@@ -93,4 +93,8 @@ public class Employee {
         return addressId;
     }
 
+    @Override
+    public String toString() {
+        return "Employee" + getEmail() + " " + getFirstName() + " " + getLastName() + " " + getMobilePhone() + " " + getTelephone() + " " + getTypeEmployee();
+    }
 }
