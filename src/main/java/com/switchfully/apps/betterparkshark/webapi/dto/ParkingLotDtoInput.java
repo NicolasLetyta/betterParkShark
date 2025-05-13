@@ -5,7 +5,7 @@ import com.switchfully.apps.betterparkshark.domain.LotCategory;
 public class ParkingLotDtoInput {
 
     private String name;
-    private LotCategory category;
+    private String category;
     private int maxCapacity;
     private double priceHour;
     private AddressDtoInput address;
@@ -15,7 +15,7 @@ public class ParkingLotDtoInput {
     public ParkingLotDtoInput() {
     }
 
-    public ParkingLotDtoInput(String name, LotCategory category, int maxCapacity, double priceHour, AddressDtoInput address, Long contactPersonId, Long divisionId) {
+    public ParkingLotDtoInput(String name, String category, int maxCapacity, double priceHour, AddressDtoInput address, Long contactPersonId, Long divisionId) {
         this.name = name;
         this.category = category;
         this.maxCapacity = maxCapacity;
@@ -29,7 +29,7 @@ public class ParkingLotDtoInput {
         return name;
     }
 
-    public LotCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -51,5 +51,9 @@ public class ParkingLotDtoInput {
 
     public Long getDivisionId() {
         return divisionId;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
