@@ -3,6 +3,7 @@ package com.switchfully.apps.betterparkshark.service;
 import com.switchfully.apps.betterparkshark.domain.Division;
 import com.switchfully.apps.betterparkshark.domain.Employee;
 import com.switchfully.apps.betterparkshark.domain.EmployeeCategory;
+import com.switchfully.apps.betterparkshark.exception.DirectorNotFoundException;
 import com.switchfully.apps.betterparkshark.exception.InvalidInputException;
 import com.switchfully.apps.betterparkshark.repository.DivisionRepository;
 import com.switchfully.apps.betterparkshark.repository.EmployeeRepository;
@@ -81,7 +82,7 @@ public class DivisionService {
 
         }
         Employee director = employeeRepository.findById(directorId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Division director not found"));
+                .orElseThrow(() -> new DirectorNotFoundException("Division director not found"));
         if (!director.getTypeEmployee().equals(EmployeeCategory.DIRECTOR)) {
             throw new InvalidInputException("Division director must be a director");
 
