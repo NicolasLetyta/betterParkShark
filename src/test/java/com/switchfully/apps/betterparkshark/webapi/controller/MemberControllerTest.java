@@ -9,7 +9,6 @@ import com.switchfully.apps.betterparkshark.service.AuthenticationService;
 import com.switchfully.apps.betterparkshark.service.MemberService;
 import com.switchfully.apps.betterparkshark.service.mapper.AddressMapper;
 import com.switchfully.apps.betterparkshark.service.mapper.MemberMapper;
-import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoInput;
 import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoOutput;
 import com.switchfully.apps.betterparkshark.webapi.dto.MemberDtoOutputLight;
@@ -41,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
 @Rollback
-public class MemberConterollerTest {
+public class MemberControllerTest {
 
     @LocalServerPort
     private int port;

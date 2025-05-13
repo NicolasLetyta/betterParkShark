@@ -49,7 +49,7 @@ public class AuthenticationService {
         String password = decodedArray[1];
 
         validateArgument(email,"Provided email not found in member repo",
-                memberRepository::existsByEmail, InvalidHeaderException::new);
+                e->!memberRepository.existsByEmail(e), InvalidHeaderException::new);
 
         Member member = memberRepository.findByEmail(email);
 
@@ -64,7 +64,7 @@ public class AuthenticationService {
         String password = decodedArray[1];
 
         validateArgument(email,"Provided email not found in employee repo",
-                employeeRepository::existsByEmail, InvalidHeaderException::new);
+                e->!employeeRepository.existsByEmail(e), InvalidHeaderException::new);
 
         Employee employee = employeeRepository.findByEmail(email);
 

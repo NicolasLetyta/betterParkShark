@@ -96,11 +96,11 @@ public class MemberServiceTest {
         AddressDtoOutput addressDtoOutput = new AddressDtoOutput("street","number",
                 "2000","city","country");
 
-        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","phone",
-                "email","password","plate",addressDtoInput,bronze.getId());
+        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","+32059488274",
+                "email@email.com","password","plate",addressDtoInput,bronze.getId());
         long newId = lastMemberId + 1;
-        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","phone",
-                "email","plate",LocalDate.now(),addressDtoOutput,"bronze");
+        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","+32059488274",
+                "email@email.com","plate",LocalDate.now(),addressDtoOutput,"bronze");
 
         MemberDtoOutput result = memberService.registerAsMember(memberDtoInput);
 
@@ -109,11 +109,11 @@ public class MemberServiceTest {
 
     @Test
     void givenMemberDtoInputWithAddressDtoInputIsNullAndMemberShipLevelId_whenRegisterAsMember_thenReturnMemberDtoOutput() {
-        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","phone",
-                "email","password","plate", null, bronze.getId());
+        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","+32392844729",
+                "email@email.com","password","plate", null, bronze.getId());
         long newId = lastMemberId + 1;
-        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","phone",
-                "email","plate",LocalDate.now(),null,"bronze");
+        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","+32392844729",
+                "email@email.com","plate",LocalDate.now(),null,"bronze");
 
         MemberDtoOutput result = memberService.registerAsMember(memberDtoInput);
 
@@ -122,11 +122,11 @@ public class MemberServiceTest {
 
     @Test
     void givenMemberDtoInputWithAddressDtoInputIsNullAndMemberShipLevelIsIsNull_whenRegisterAsMember_thenReturnMemberDtoOutputWithBronzeLevel() {
-        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","phone",
-                "email","password","plate", null,null);
+        MemberDtoInput memberDtoInput = new MemberDtoInput("nicolas","bluj","+32059388475",
+                "email@email.com","password","plate", null,null);
         long newId = lastMemberId + 1;
-        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","phone",
-                "email","plate",LocalDate.now(),null,"bronze");
+        MemberDtoOutput expectedResult = new MemberDtoOutput(newId,"nicolas bluj","+32059388475",
+                "email@email.com","plate",LocalDate.now(),null,"bronze");
 
         MemberDtoOutput result = memberService.registerAsMember(memberDtoInput);
 
