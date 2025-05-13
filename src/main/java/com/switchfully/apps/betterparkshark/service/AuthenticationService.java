@@ -1,4 +1,3 @@
-
 package com.switchfully.apps.betterparkshark.service;
 
 import com.switchfully.apps.betterparkshark.domain.Employee;
@@ -16,7 +15,7 @@ import static com.switchfully.apps.betterparkshark.utility.Validation.validateAr
 
 @Service
 public class AuthenticationService {
-/*
+
     private final MemberRepository memberRepository;
     private final EmployeeRepository employeeRepository;
 
@@ -74,8 +73,6 @@ public class AuthenticationService {
         return employee;
         //this comment is here so we can commit this file, ignore
     }
-
- */
 }
 
 
