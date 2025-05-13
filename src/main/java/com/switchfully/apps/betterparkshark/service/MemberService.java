@@ -68,16 +68,16 @@ public class MemberService {
         return memberMapper.projectedMembersToOutputLight(memberRepository.findAllMembersProjected());
     }
 
-    public MemberDtoOutput updateMemberShipLevel(Long memberId, Long membershipLevelId) {
-        validateArgument(memberId,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
+    public MemberDtoOutput updateMemberShipLevel(Member member, Long membershipLevelId) {
+        //validateArgument(memberId,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         validateArgument(membershipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
 
-        Member member = memberRepository.findById(memberId).get();
+        //Member member = memberRepository.findById(memberId).get();
         Address address = findAddressOrNull(member.getAddressId());
 
         member.setMembershipLevelId(membershipLevelId);
         memberRepository.save(member);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
+        MembershipLevel membershipLevel = membershipLevelRepository.findById(membershipLevelId).get();
         return memberMapper.memberToOutput(member,address,membershipLevel.getName());
     }
 

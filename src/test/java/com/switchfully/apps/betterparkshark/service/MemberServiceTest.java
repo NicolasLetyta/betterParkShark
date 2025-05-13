@@ -191,7 +191,7 @@ public class MemberServiceTest {
         MemberDtoOutput expectedResult = new MemberDtoOutput(memberId, member4.getName(), member4.getPhone(),
                 member4.getEmail(), member4.getLicensePlate(), member4.getRegistrationDate(), addressDto, gold.getName());
 
-        MemberDtoOutput result = memberService.updateMemberShipLevel(memberId, newMemberShipLevelId);
+        MemberDtoOutput result = memberService.updateMemberShipLevel(member4, newMemberShipLevelId);
 
         assertThat(result).isEqualTo(expectedResult);
     }
