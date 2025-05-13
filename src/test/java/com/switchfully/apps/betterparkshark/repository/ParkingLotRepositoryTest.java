@@ -2,8 +2,10 @@ package com.switchfully.apps.betterparkshark.repository;
 
 import com.switchfully.apps.betterparkshark.domain.*;
 import com.switchfully.apps.betterparkshark.webapi.dto.AddressDtoInput;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -12,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDate;
 import java.util.List;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DataJpaTest
 public class ParkingLotRepositoryTest {
 
@@ -36,7 +39,7 @@ public class ParkingLotRepositoryTest {
     private Division division;
     private MembershipLevel bronze;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
@@ -82,7 +85,7 @@ public class ParkingLotRepositoryTest {
     }
 
     @Test
-    void givenParkingLotsExistInDatabase_whenFindAll_thenReturnListOfParkingLotsNotTooMuchDetails() {
+    void givenParkingLotsExistInDatabase_whenFindAll_thenReturnListOfParkingLots() {
         parkingLotRepository.deleteAll();
         ParkingLot savedParkingLot1 = parkingLotRepository.save(new ParkingLot("test", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L));
         ParkingLot savedParkingLot2 = parkingLotRepository.save(new ParkingLot("test2", LotCategory.GROUND_BUILDING,250,2.5,1L,2L,1L));
@@ -91,7 +94,21 @@ public class ParkingLotRepositoryTest {
 
         assertThat(parkingLots).isNotNull();
         assertThat(parkingLots.size()).isEqualTo(2);
-        //add check number of fields present?
+
+    }
+
+    @Test
+    void givenParkingLotExistInDatabase_whenFindById_thenReturnParkingLot() {
+        parkingLotRepository.deleteAll();
+        ParkingLot savedParkingLot1 = parkingLotRepository.save(new ParkingLot("test", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L));
+
+        ParkingLot retrievedParkingLot = parkingLotRepository.findById(savedParkingLot1.getId()).get();
+
+        assertThat(retrievedParkingLot).isNotNull();
+        assertThat(retrievedParkingLot.getId()).isEqualTo(savedParkingLot1.getId());
+        assertThat(retrievedParkingLot.getName()).isEqualTo(savedParkingLot1.getName());
+        assertThat(retrievedParkingLot.getSpaceAvailable()).isEqualTo(250);
+        assertThat(retrievedParkingLot.getDivisionId()).isEqualTo(1);
     }
 
 }

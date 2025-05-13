@@ -80,11 +80,11 @@ public class ParkingLotControllerTest {
                 .then()
                 .statusCode(201)
                 .body("name",equalTo("ParkingLot"))
-                .body("category",equalTo(LotCategory.GROUND_BUILDING))
+                .body("category",equalTo(LotCategory.GROUND_BUILDING.name()))
                 .body("employeePhone", equalTo("phone"))
                 .body("employeeFirstName", equalTo("name"))
-                .body("parkingLotAddress.street", equalTo("street"))
-                .body("parkingLotAddress.number", equalTo("number"));
+                .body("addressParkingLot.street", equalTo("street"))
+                .body("addressParkingLot.streetNumber", equalTo("number"));
 
     }
 
@@ -113,17 +113,16 @@ public class ParkingLotControllerTest {
         parkingLotRepository.save(parkingLot1);
 
         when()
-                .get("/parking_lots/1")
+                .get("/parking_lots/"+parkingLot1.getId())
                 .then()
                 .statusCode(200)
-                .body("size()", equalTo(1))
-                .body("id", equalTo(parkingLot1.getId()))
+                .body("id", equalTo(parkingLot1.getId().intValue()))
                 .body("name", equalTo("test"))
-                .body("category", equalTo(LotCategory.GROUND_BUILDING))
+                .body("category", equalTo(LotCategory.GROUND_BUILDING.name()))
                 .body("employeePhone", equalTo("phone"))
                 .body("employeeFirstName", equalTo("name"))
-                .body("parkingLotAddress.street", equalTo("street"))
-                .body("parkingLotAddress.number", equalTo("number"));
+                .body("addressParkingLot.street", equalTo("street"))
+                .body("addressParkingLot.streetNumber", equalTo("number"));
     }
 
 

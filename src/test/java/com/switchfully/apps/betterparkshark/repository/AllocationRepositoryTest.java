@@ -1,8 +1,10 @@
 package com.switchfully.apps.betterparkshark.repository;
 
 import com.switchfully.apps.betterparkshark.domain.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DataJpaTest
 public class AllocationRepositoryTest {
 
@@ -39,7 +42,7 @@ public class AllocationRepositoryTest {
     private Division division;
     private MembershipLevel bronze;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
