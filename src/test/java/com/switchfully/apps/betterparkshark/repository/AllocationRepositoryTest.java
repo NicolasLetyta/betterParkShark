@@ -74,7 +74,7 @@ public class AllocationRepositoryTest {
     @Test
     void givenCorrectAllocation_whenSave_thenReturnAllocationFromDatabase() {
         Allocation allocation = new Allocation(
-                1L,"plate",1L
+                member1.getId(),"plate",parkingLot1.getId()
         );
 
         Allocation savedAllocation = allocationRepository.save(allocation);
@@ -106,8 +106,9 @@ public class AllocationRepositoryTest {
     @Test
     void givenAllocationExistInDatabase_whenFindAll_thenReturnListOfAllocations() {
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(2L,"plate2",2L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(2L,"plate2",parkingLot2.getId()));
+
 
         List<Allocation> allocations = allocationRepository.findAll();
 
@@ -118,11 +119,12 @@ public class AllocationRepositoryTest {
     @Test
     void givenMemberId_whenFindByMemberId_thenReturnAllocationOfThatMember() {
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(1L,"plate",2L));
-
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot2.getId()));
+        System.out.println(savedAllocation1);
+        System.out.println(allocationRepository.findAll());
         List<Allocation> allocations = allocationRepository.findByMemberId(member1.getId());
-
+        System.out.println(allocations);
         assertThat(allocations).isNotNull();
         assertThat(allocations.size()).isEqualTo(2);
     }
@@ -130,8 +132,8 @@ public class AllocationRepositoryTest {
     @Test
     void givenMemberId_whenFindByMemberIdAndEndTimeIsNull_thenReturnActiveAllocation(){
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(1L,"plate",2L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot2.getId()));
         savedAllocation1.setEndTime(LocalDateTime.now().withNano(0));
 
         allocationRepository.save(savedAllocation1);
@@ -145,8 +147,8 @@ public class AllocationRepositoryTest {
     @Test
     void givenMemberId_whenFindByMemberIdAndEndTimeIsNotNull_thenReturnActiveAllocation(){
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(1L,"plate",2L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot2.getId()));
         savedAllocation1.setEndTime(LocalDateTime.now().withNano(0));
 
         allocationRepository.save(savedAllocation1);
@@ -160,8 +162,8 @@ public class AllocationRepositoryTest {
     @Test
     void givenParkingId_whenFindByParkingId_thenReturnAllocationOfThatParking() {
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(2L,"plate",1L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member2.getId(),"plate",parkingLot1.getId()));
 
         List<Allocation> allocations = allocationRepository.findByParkingId(parkingLot1.getId());
 
@@ -172,8 +174,8 @@ public class AllocationRepositoryTest {
     @Test
     void givenParkingId_whenFindByParkingIdAndEndTimeNull_thenReturnAllocationOfThatParking() {
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(2L,"plate",1L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member2.getId(),"plate",parkingLot1.getId()));
         savedAllocation1.setEndTime(LocalDateTime.now().withNano(0));
 
         allocationRepository.save(savedAllocation1);
@@ -187,8 +189,8 @@ public class AllocationRepositoryTest {
     @Test
     void givenParkingId_whenFindByParkingIdAndEndTimeNotNull_thenReturnAllocationOfThatParking() {
         allocationRepository.deleteAll();
-        Allocation savedAllocation1 = allocationRepository.save(new Allocation(1L,"plate",1L));
-        Allocation savedAllocation2 = allocationRepository.save(new Allocation(2L,"plate",1L));
+        Allocation savedAllocation1 = allocationRepository.save(new Allocation(member1.getId(),"plate",parkingLot1.getId()));
+        Allocation savedAllocation2 = allocationRepository.save(new Allocation(member2.getId(),"plate",parkingLot1.getId()));
         savedAllocation1.setEndTime(LocalDateTime.now().withNano(0));
 
         allocationRepository.save(savedAllocation1);
