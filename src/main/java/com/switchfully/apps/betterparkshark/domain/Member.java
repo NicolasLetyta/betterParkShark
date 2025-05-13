@@ -11,7 +11,6 @@ public class Member {
     @Id
     @SequenceGenerator(sequenceName = "member_seq", name = "member_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
-
     private Long id;
 
     @Column(name = "first_name", nullable = false)
