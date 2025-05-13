@@ -130,6 +130,7 @@ public class MemberServiceTest {
 
         MemberDtoOutput result = memberService.registerAsMember(memberDtoInput);
 
+
         assertThat(result).isEqualTo(expectedResult);
     }
 
