@@ -65,4 +65,16 @@ public class Allocation {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString() {
+        return "Allocation{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", parkingId=" + parkingId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }
