@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -74,6 +76,9 @@ public class MemberRepositoryTest {
 
     @Test
     void givenMultipleMembersInDatabase_whenFindAllMembersProjected_thenReturnAllMembersProjected() {
+        memberRepository.deleteAll();
+        addressRepository.deleteAll();
+
         Member member1 = new Member("name1","name1","phone1","email1","pass1",
                 "plate1",LocalDate.now(),1L,1L);
         Member member2 = new Member("name2","name2","phone2","email2","pass2",
