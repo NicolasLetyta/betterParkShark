@@ -13,13 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
 import java.time.LocalDate;
+import java.util.Base64;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -41,6 +44,7 @@ public class ParkingLotControllerTest {
     private MembershipLevelRepository membershipLevelRepository;
 
     private Employee employee;
+    private Employee admin;
     private Address address;
     private AddressDtoInput addressDto;
     private Member member1;
@@ -48,7 +52,7 @@ public class ParkingLotControllerTest {
     private Division division;
     private MembershipLevel bronze;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
@@ -69,7 +73,9 @@ public class ParkingLotControllerTest {
         memberRepository.save(member1);
         memberRepository.save(member2);
         employee = new Employee("name","name","mobile","phone","nm@gmail.com","pass", EmployeeCategory.CONTACT_PERSON,1L);
+        admin = new Employee("name","name","phone","mobile","admin@gmail.com","pass", EmployeeCategory.ADMIN,1L);
         employeeRepository.save(employee);
+        employeeRepository.save(admin);
         division = new Division("Division 1", "Original Name 1", 1L, 1L);
         divisionRepository.save(division);
     }
@@ -78,8 +84,10 @@ public class ParkingLotControllerTest {
     void testCreateNewParkingLot() {
         addressDto = new AddressDtoInput("street","number","2000","city","country");
         ParkingLotDtoInput parkingLotDtoInput = new ParkingLotDtoInput("ParkingLot","GROUND_BUILDING", 250, 2.5, addressDto,1L,1L );
+        String authToken = basicAuth("admin@gmail.com","pass");
 
         given()
+                .header("Authorization", authToken)
                 .contentType("application/json")
                 .body(parkingLotDtoInput)
                 .when()
@@ -103,8 +111,11 @@ public class ParkingLotControllerTest {
         ParkingLot parkingLot2 = new ParkingLot("test2", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L);
         parkingLotRepository.save(parkingLot1);
         parkingLotRepository.save(parkingLot2);
+        String authToken = basicAuth("admin@gmail.com","pass");
 
-        when()
+        given()
+                .header("Authorization", authToken)
+                .when()
                 .get("/parking_lots")
                 .then()
                 .statusCode(200)
@@ -118,9 +129,12 @@ public class ParkingLotControllerTest {
         parkingLotRepository.deleteAll();
         ParkingLot parkingLot1 = new ParkingLot("test", LotCategory.GROUND_BUILDING,250,2.5,1L,1L,1L);
         parkingLotRepository.save(parkingLot1);
+        String authToken = basicAuth("admin@gmail.com","pass");
 
-        when()
-                .get("/parking_lots/"+parkingLot1.getId())
+        given()
+                .header("Authorization", authToken)
+                .when()
+                .get("/parking_lots/"+parkingLot1.getId().intValue())
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(parkingLot1.getId().intValue()))
@@ -132,5 +146,8 @@ public class ParkingLotControllerTest {
                 .body("addressParkingLot.streetNumber", equalTo("number"));
     }
 
+    private String basicAuth(String email, String password) {
+        return "Basic " + Base64.getEncoder().encodeToString((email + ":" + password).getBytes());
+    }
 
 }

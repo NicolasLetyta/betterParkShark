@@ -44,6 +44,13 @@ public class AllocationRepositoryTest {
 
     @BeforeAll
     void setUp() {
+        memberRepository.deleteAll();
+        addressRepository.deleteAll();
+        divisionRepository.deleteAll();
+        employeeRepository.deleteAll();
+        membershipLevelRepository.deleteAll();
+        parkingLotRepository.deleteAll();
+        allocationRepository.deleteAll();
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
         bronze = new MembershipLevel("bronze",0,0,4);

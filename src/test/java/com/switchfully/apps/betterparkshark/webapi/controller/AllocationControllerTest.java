@@ -25,6 +25,7 @@ import java.util.Base64;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase
@@ -64,13 +65,13 @@ public class AllocationControllerTest {
     void setUp() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
-//        memberRepository.deleteAll();
-//        addressRepository.deleteAll();
-//        divisionRepository.deleteAll();
-//        employeeRepository.deleteAll();
-//        membershipLevelRepository.deleteAll();
-//        parkingLotRepository.deleteAll();
-//        allocationRepository.deleteAll();
+        memberRepository.deleteAll();
+        addressRepository.deleteAll();
+        divisionRepository.deleteAll();
+        employeeRepository.deleteAll();
+        membershipLevelRepository.deleteAll();
+        parkingLotRepository.deleteAll();
+        allocationRepository.deleteAll();
         address = new Address("street","number","2000","city","country");
         addressRepository.save(address);
         bronze = new MembershipLevel("bronze",0,0,4);
@@ -82,7 +83,7 @@ public class AllocationControllerTest {
         memberRepository.save(member1);
         memberRepository.save(member2);
         employee = new Employee("name","name","phone","mobile","contact@gmail.com","pass", EmployeeCategory.CONTACT_PERSON,1L);
-        admin = new Employee("name","name","phone","mobile","admin@gmail.com","pass", EmployeeCategory.CONTACT_PERSON,1L);
+        admin = new Employee("name","name","phone","mobile","admin@gmail.com","pass", EmployeeCategory.ADMIN,1L);
         employeeRepository.save(employee);
         employeeRepository.save(admin);
         division = new Division("Division 1", "Original Name 1", 1L, 1L);
@@ -109,9 +110,8 @@ public class AllocationControllerTest {
                 .post("/allocations")
                 .then()
                 .statusCode(201)
-                .body("allocationId", equalTo(1))
-                .body("memberId", equalTo(1))
-                .body("parkingId", equalTo(1))
+                .body("memberId", equalTo(allocation.getMemberId().intValue()))
+                .body("parkingId", equalTo(allocation.getParkingId().intValue()))
                 .body("licensePlate", equalTo("plate"))
                 .body("endTime", equalTo(null));
     }
@@ -121,10 +121,11 @@ public class AllocationControllerTest {
         allocationRepository.deleteAll();
         allocationRepository.save(new Allocation(1L,"plate",1L));
         allocationRepository.save(new Allocation(2L,"plate2",2L));
+
         String authToken = basicAuth("admin@gmail.com","pass");
 
-
         given()
+                .contentType("application/json")
                 .header("Authorization", authToken)
                 .when()
                 .get("/allocations")
@@ -184,7 +185,7 @@ public class AllocationControllerTest {
         given()
                 .header("Authorization", authToken)
                 .when()
-                .post("/allocations/" +allocationId)
+                .post("/allocations/" +allocationId.intValue())
                 .then()
                 .statusCode(200)
                 .body("endTime", notNullValue());
