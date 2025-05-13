@@ -237,14 +237,14 @@ public class MemberControllerTest {
     }
 
     @Test
-    void givenValidAuthToken_whenupdateMembershipLevel_thenReturnMemberDtoOutputStatusOk() throws Exception {
+    void givenValidAuthToken_whenUpdateMembershipLevel_thenReturnMemberDtoOutputStatusOk() throws Exception {
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
-        Map<String, Long> payload = Map.of("membershipLevel", memberGold.getId());
+        Map<String, Long> payload = Map.of("membershipLevel", gold.getId());
 
         String authToken = basicAuth("bertheinz@gmail.com","bertheinz");
-        MemberDtoOutput expectedResult = memberService.updateMemberShipLevel(memberBronze,memberGold.getId());
+        MemberDtoOutput expectedResult = memberService.updateMemberShipLevel(memberBronze,gold.getId());
 
         MemberDtoOutput response = given()
                 .header("Authorization", authToken)
@@ -261,7 +261,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    void givenInValidAuthToken_whenupdateMembershipLevel_thenReturnStatusUnauthorized() throws Exception {
+    void givenInValidAuthToken_whenUpdateMembershipLevel_thenReturnStatusUnauthorized() throws Exception {
         String authToken = basicAuth("booboothefool@yahoo.com","booboothefool");
         Map<String, Long> payload = Map.of("membershipLevel", memberGold.getId());
 

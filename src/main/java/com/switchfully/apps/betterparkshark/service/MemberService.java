@@ -60,8 +60,8 @@ public class MemberService {
         Address address = findAddressOrNull(member.getAddressId());
         //The way the data flows makes it impossible to retreieve a member from the databse whos MembershipLevelId is null
         //I can safely .get() from the optional without ever retrieving a null value
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(member.getMembershipLevelId()).get();
-        return memberMapper.memberToOutput(member,address,membershipLevel.getName());
+        String membershipLevelName = membershipLevelRepository.findNameById(member.getMembershipLevelId());
+        return memberMapper.memberToOutput(member,address,membershipLevelName);
     }
 
     public List<MemberDtoOutputLight> findAllMembers() {
@@ -72,13 +72,12 @@ public class MemberService {
         //validateArgument(memberId,"Member not found in repository", i->!memberRepository.existsById(i),InvalidInputException::new);
         validateArgument(membershipLevelId,"Membership level not found in repository", i->!membershipLevelRepository.existsById(i),InvalidInputException::new);
 
-        //Member member = memberRepository.findById(memberId).get();
         Address address = findAddressOrNull(member.getAddressId());
 
         member.setMembershipLevelId(membershipLevelId);
         memberRepository.save(member);
-        MembershipLevel membershipLevel = membershipLevelRepository.findById(membershipLevelId).get();
-        return memberMapper.memberToOutput(member,address,membershipLevel.getName());
+        String membershipLevelName = membershipLevelRepository.findNameById(membershipLevelId);
+        return memberMapper.memberToOutput(member,address,membershipLevelName);
     }
 
     private MembershipLevel setMemberShipLevelToBronzeWhenNull(MemberDtoInput memberDtoInput) {
