@@ -82,6 +82,6 @@ public class AllocationController {
                                               @RequestHeader(value = "Authorization") String authToken) {
         logger.info("Inside stopAllocation");
         Member member = authenticationService.authenticateMember(authToken);
-        return allocationService.stopAllocation(member.getId(), member);
+        return allocationService.stopAllocation(id, member);
     }
 }
