@@ -10,4 +10,6 @@ extends JpaRepository<Employee, Long> {
     Employee findEmployeeById(long id);
 
     Employee findByEmail(String email);
+
+    boolean existsByEmail(String s);
 }

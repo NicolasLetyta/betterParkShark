@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface DivisionRepository extends JpaRepository<Division, Long> {
+    boolean existsByName(String name);
     //
     // All methods are inherited from JpaRepository
     //    // save(), findById() and findAll() are used.
